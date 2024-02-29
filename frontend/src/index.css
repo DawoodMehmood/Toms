@@ -15,3 +15,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.small-size {
+  font-size: small;
+}
+
+.links {
+  color: blue
+}
+
+h1 {
+  font-size: 52px;
+  font-weight: 900;
+  margin: 5px 0 10px 0;
+  color: #404040;
+}
+
+@media screen and (max-width: 749px) {
+  h1 {
+    font-size: 40px;
+  }
+
+}
