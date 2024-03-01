@@ -1,11 +1,12 @@
 import React from "react";
 import HeadingWithPara from "../components/headingWithPara";
+import ListOfHeading from "../components/listOfHeading";
 
 const Careers = () => {
   return (
     <>
       <div className="mx-20">
-        <h1 className="flex items-center ">WANT TO WORK WITH US?</h1>
+        <h1 className="flex items-center">WANT TO WORK WITH US?</h1>
         <br />
         <p className="font-bold">
           Please apply to{" "}
@@ -18,6 +19,52 @@ const Careers = () => {
           At VRG GRL, we're more than the clothes we sell. Day-in-day-out, we're
           working to inspire creativity, freedom, confidence and style.
         </p>
+        <br />
+        <h3 className="flex items-center justify-center">THE PERKS</h3>
+        <br />
+        <div className=" sm:grid grid-cols-3 gap-4">
+          <ListOfHeading
+            order={1}
+            heading={
+              <h4>
+                OPPORTUNITY TO JOIN A LEADING AUSTRALIAN WOMEN'S FASHION BRAND
+              </h4>
+            }
+          />
+          <ListOfHeading
+            order={2}
+            heading={
+              <h4>
+                FLEXIBLE HOURS - WORK AROUND YOUR LIFESTYLE AND COMMITMENTS
+              </h4>
+            }
+          />
+          <ListOfHeading
+            order={3}
+            heading={<h4>4 DAY WORK WEEK (FULL-TIME ROLES ONLY)</h4>}
+          />
+          <ListOfHeading
+            order={4}
+            heading={
+              <h4>
+                OPPORTUNITY TO JOIN A LEADING AUSTRALIAN WOMEN'S FASHION BRAND
+              </h4>
+            }
+          />
+          <ListOfHeading
+            order={5}
+            heading={
+              <h4>
+                FLEXIBLE HOURS - WORK AROUND YOUR LIFESTYLE AND COMMITMENTS
+              </h4>
+            }
+          />
+          <ListOfHeading
+            order={6}
+            heading={<h4>4 DAY WORK WEEK (FULL-TIME ROLES ONLY)</h4>}
+          />
+        </div>
+        <br />
         <HeadingWithPara
           heading={<p>PRODUCTION AND DESIGN ASSISTANT</p>}
           content={
@@ -74,6 +121,13 @@ const Careers = () => {
             </ul>
           }
         />
+        <div className="my-6">
+          If this sounds like you, please apply
+          <strong>
+            {" "}
+            <a>via SEEK here.</a>
+          </strong>
+        </div>
       </div>
     </>
   );
