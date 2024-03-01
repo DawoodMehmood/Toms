@@ -2,6 +2,7 @@ import TermsAndConditions from "./pages/terms";
 import { Routes, Route } from "react-router-dom";
 import FAQS from "./pages/faqs";
 import Careers from "./pages/careers";
+import "./components/App.css";
 
 function App() {
   return (
