@@ -1,6 +1,7 @@
 import TermsAndConditions from "./pages/terms";
 import { Routes, Route } from "react-router-dom";
 import FAQS from "./pages/faqs";
+import Careers from "./pages/careers";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         ></Route>
 
         <Route path="/faqs" element={<FAQS />}></Route>
+        <Route path="/careers" element={<Careers />}></Route>
       </Routes>
     </div>
   );
