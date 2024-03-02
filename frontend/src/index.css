@@ -46,3 +46,22 @@ ul {
     font-size: 40px;
   }
 }
+
+/*product details*/
+.color-select img {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+
+
+.div1,
+.div2 {
+  overflow-y: auto;
+}
+
+.div1::-webkit-scrollbar,
+.div2::-webkit-scrollbar {
+  display: none;
+}
