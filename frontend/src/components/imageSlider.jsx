@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./components.css";
-import { Mousewheel, Navigation, Autoplay } from "swiper/modules";
+import { Mousewheel, Navigation } from "swiper/modules";
 
 import SliderCard from "./sliderCard";
 import { SwiperNavButtons } from "./swiperNavButtons";
@@ -50,14 +50,10 @@ const Slider = ({ title }) => {
             mousewheel={{
               forceToAxis: true,
             }}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: true,
-            }}
             speed={800}
             effect="fade"
             followFinger={false}
-            modules={[Mousewheel, Navigation, Autoplay]}
+            modules={[Mousewheel, Navigation]}
           >
             <SwiperSlide>
               <SliderCard
@@ -69,7 +65,8 @@ const Slider = ({ title }) => {
             </SwiperSlide>
             <SwiperSlide>
               <SliderCard
-                imageUrl={image1}
+                imageUrl={image2}
+                hoverImageUrl={image3}
                 title={"ETTA HOOPS TWO TONED"}
                 price={"$987 AUD"}
                 isSoldOut={true}
@@ -77,21 +74,24 @@ const Slider = ({ title }) => {
             </SwiperSlide>
             <SwiperSlide>
               <SliderCard
-                imageUrl={image1}
+                imageUrl={image3}
+                hoverImageUrl={image4}
                 title={"AZURE NECKLACE GOLD"}
                 price={"$987 AUD"}
               />
             </SwiperSlide>
             <SwiperSlide>
               <SliderCard
-                imageUrl={image1}
+                imageUrl={image4}
+                hoverImageUrl={image5}
                 title={"AZURE NECKLACE SILVER"}
                 price={"$987 AUD"}
               />
             </SwiperSlide>
             <SwiperSlide>
               <SliderCard
-                imageUrl={image1}
+                imageUrl={image5}
+                hoverImageUrl={image6}
                 title={"TERRA LINEN SHIRT"}
                 price={"$987 AUD"}
               />
