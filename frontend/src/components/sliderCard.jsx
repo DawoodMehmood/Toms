@@ -31,9 +31,9 @@ const SliderCard = ({ imageUrl, hoverImageUrl, title, price, isSoldOut }) => {
               </div>
               <button className="" onClick={toggleFavorite}>
                 {isFavorited ? (
-                  <IoMdHeart className="h-6 w-6" />
+                  <IoMdHeart size={25} />
                 ) : (
-                  <IoMdHeartEmpty className="h-6 w-6" />
+                  <IoMdHeartEmpty size={25} />
                 )}
               </button>
             </div>
