@@ -35,6 +35,16 @@ const ProductDetails = () => {
     };
   }, []);
 
+  const ratings = [4, 5, 3, 4, 5];
+  if (!ratings || !Array.isArray(ratings) || ratings.length === 0) {
+    return null; // Return null if ratings array is undefined, not an array, or empty
+  }
+
+  // Calculate average rating
+  const totalRatings = ratings.length;
+  const averageRating = ratings.reduce((a, b) => a + b, 0) / totalRatings;
+  console.log(averageRating);
+
   return (
     <section className="py-5">
       <div className="mx-auto grid grid-cols-1 sm:grid-cols-12">
@@ -62,7 +72,10 @@ const ProductDetails = () => {
         <div className="div2 sm:col-span-6 md:col-span-5 my-4 mx-3 ">
           <h4>FRANCA KNIT CARDIGAN PINK</h4>
 
-          <StarRating ratings={[4, 5, 3, 4, 5]} />
+          <div className="flex justify-start items-center">
+            <StarRating averageRating={averageRating} />
+            <span className="ml-2 text-gray-600">{totalRatings} reviews</span>
+          </div>
 
           <p className="small-size my-2">
             <strong>$50.5 UAD</strong>
@@ -256,6 +269,47 @@ const ProductDetails = () => {
           />
         </div>
       </div>
+      <section>
+        <div className="flex flex-col justify-center items-center">
+          <p className="number-heading">{averageRating}</p>
+          <StarRating averageRating={averageRating} />
+          <p>BASED ON {totalRatings} REVIEWS</p>
+        </div>
+        <div class="border-t border-gray-200 mt-3 py-5 mx-5">
+          <div class="flex justify-between">
+            <div>
+              <p class="font-semibold">
+                EMMA C. <span class="text-gray-400">VERIFIED BUYER</span>
+              </p>
+            </div>
+            <div>
+              <p>2 WEEKS AGO</p>
+            </div>
+          </div>
+          <div class="flex flex-row gap-3 my-4">
+            <div>
+              <img class="w-14 h-16" src={image1} alt="" />
+            </div>
+            <div class="flex flex-col">
+              <div>
+                <p>
+                  <strong>REVIEWING</strong>
+                </p>
+              </div>
+              <div>
+                <p>AFTERSUN MINI DRESS TROPICANA</p>
+              </div>
+            </div>
+          </div>
+          <StarRating averageRating={averageRating} />
+          <div className="my-2">
+            <h4>VERY HAPPY</h4>
+          </div>
+          <div>
+            <p className="text-gray-600">Great Price, Great Quality.</p>
+          </div>
+        </div>
+      </section>
     </section>
   );
 };
