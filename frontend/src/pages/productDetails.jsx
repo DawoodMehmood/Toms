@@ -164,17 +164,17 @@ const ProductDetails = () => {
           </div>
           <button className="w-full bg-gray-200 py-2 my-2">ADD TO CART</button>
           <div className="grid grid-cols-2 gap-3 small-size my-2">
-            <div class="grid grid-rows-2">
-              <div class="flex items-center justify-center">
+            <div className="grid grid-rows-2">
+              <div className="flex items-center justify-center">
                 <img
                   src="https://cdn.shopify.com/s/files/1/2682/6366/files/REFUNDID.png?v=1696809916"
                   width="50px"
                 />
               </div>
-              <p class="text-center">INSTANT RETURNS WITH REFUNDID</p>
+              <p className="text-center">INSTANT RETURNS WITH REFUNDID</p>
             </div>
             <div className="grid grid-rows-2">
-              <div class="flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <svg
                   className="icon icon-accordion color-foreground-text"
                   aria-hidden="true"
@@ -275,22 +275,21 @@ const ProductDetails = () => {
           <StarRating averageRating={averageRating} />
           <p>BASED ON {totalRatings} REVIEWS</p>
         </div>
-        <div class="border-t border-gray-200 mt-3 py-5 mx-5">
-          <div class="flex justify-between">
-            <div>
-              <p class="font-semibold">
-                EMMA C. <span class="text-gray-400">VERIFIED BUYER</span>
-              </p>
+        <div className="border-t border-gray-200 mt-3 py-5 mx-5">
+          <div className="flex justify-between">
+            <div className="flex justify-start gap-4">
+              <p className="font-semibold">EMMA C.</p>
+              <p className="text-gray-400">VERIFIED BUYER</p>
             </div>
             <div>
               <p>2 WEEKS AGO</p>
             </div>
           </div>
-          <div class="flex flex-row gap-3 my-4">
+          <div className="flex flex-row gap-3 my-4">
             <div>
-              <img class="w-14 h-16" src={image1} alt="" />
+              <img className="w-14 h-16" src={image1} alt="" />
             </div>
-            <div class="flex flex-col">
+            <div className="flex flex-col">
               <div>
                 <p>
                   <strong>REVIEWING</strong>
