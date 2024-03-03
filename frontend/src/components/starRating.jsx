@@ -1,13 +1,7 @@
 import React from "react";
 
-const StarRating = ({ ratings }) => {
-  if (!ratings || !Array.isArray(ratings) || ratings.length === 0) {
-    return null; // Return null if ratings array is undefined, not an array, or empty
-  }
+const StarRating = ({ averageRating }) => {
 
-  // Calculate average rating
-  const totalRatings = ratings.length;
-  const averageRating = ratings.reduce((a, b) => a + b, 0) / totalRatings;
 
   // Render star icons
   const renderStars = (averageRating) => {
@@ -50,7 +44,7 @@ const StarRating = ({ ratings }) => {
       {/* Render stars */}
       {renderStars(averageRating)}
       {/* Total number of reviews */}
-      <span className="ml-2 text-gray-600">{totalRatings} reviews</span>
+      
     </div>
   );
 };
