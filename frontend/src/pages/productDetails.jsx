@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import image1 from "./../img/pro-1.jpg";
-import image2 from "./../img/pro-2.jpg";
-import image3 from "./../img/pro-3.jpg";
-import image4 from "./../img/pro-4.jpg";
-import image5 from "./../img/pro-5.jpg";
-import image6 from "./../img/pro-6.jpg";
+import image1 from "./../assets/img/pro-1.jpg";
+import image2 from "./../assets/img/pro-2.jpg";
+import image3 from "./../assets/img/pro-3.jpg";
+import image4 from "./../assets/img/pro-4.jpg";
+import image5 from "./../assets/img/pro-5.jpg";
+import image6 from "./../assets/img/pro-6.jpg";
 import StarRating from "../components/starRating";
 import AfterpayLogo from "../components/afterPayLogo";
 import CustomAccordion from "../components/customAccordion";
