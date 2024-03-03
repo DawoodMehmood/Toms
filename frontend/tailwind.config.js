@@ -7,6 +7,9 @@ module.exports = {
         banner: "#faf5ef",
         orangeColor: "#f69420",
       },
+      fontSize: {
+        xxs: ".625rem",
+      },
     },
   },
   plugins: [],
