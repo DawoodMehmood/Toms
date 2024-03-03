@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import image1 from "./../img/pro-1.jpg";
 import image2 from "./../img/pro-2.jpg";
 import image3 from "./../img/pro-3.jpg";
@@ -10,6 +10,12 @@ import AfterpayLogo from "../components/afterPayLogo";
 import CustomAccordion from "../components/customAccordion";
 
 const ProductDetails = () => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   useEffect(() => {
     const div1 = document.querySelector(".div1");
     const div2 = document.querySelector(".div2");
@@ -70,7 +76,16 @@ const ProductDetails = () => {
         </div>
 
         <div className="div2 sm:col-span-6 md:col-span-5 my-4 mx-3 ">
-          <h4>FRANCA KNIT CARDIGAN PINK</h4>
+          <div className="flex items-center ">
+            <h4>FRANCA KNIT CARDIGAN PINK</h4>
+            <i
+              className={`fa fa-heart mx-3${
+                isFavorite ? " text-red-500" : " text-gray-500"
+              } `}
+              onClick={toggleFavorite}
+              style={{ fontSize: "1.2rem" }}
+            />
+          </div>
 
           <div className="flex justify-start items-center">
             <StarRating averageRating={averageRating} />
