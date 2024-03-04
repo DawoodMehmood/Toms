@@ -23,7 +23,7 @@ const Banner = () => {
   }, []);
 
   return (
-    <section className="overflow-hidden bg-banner">
+    <header className="overflow-hidden bg-banner">
       <div
         className={`h-[40px] flex items-center justify-center transition-opacity duration-1000 ${opacity} text-sm tracking-widest unselectable`}
       >
@@ -31,7 +31,7 @@ const Banner = () => {
           {messages[currentMessageIndex].text}
         </a>
       </div>
-    </section>
+    </header>
   );
 };
 
