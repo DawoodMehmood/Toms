@@ -6,6 +6,7 @@ import Careers from "./pages/careers";
 import "./components/components.css";
 import ProductDetails from "./pages/productDetails";
 import Navbar from "./components/navbar";
+import ScrollToTopButton from "./components/scrollToTopButton";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/home" element={<Home />}></Route>
         <Route path="/" element={<Navigate to="/home" />}></Route>
       </Routes>
+      <ScrollToTopButton />
     </div>
   );
 }
