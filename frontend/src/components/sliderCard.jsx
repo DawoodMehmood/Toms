@@ -12,7 +12,7 @@ const SliderCard = ({ imageUrl, hoverImageUrl, title, price, isSoldOut }) => {
 
   return (
     <div>
-      <a href={`/products/${title}`}>
+      <a href={`/product-details`}>
         <div
           className="max-w-sm bg-white relative"
           onMouseEnter={() => setIsHovering(true)}

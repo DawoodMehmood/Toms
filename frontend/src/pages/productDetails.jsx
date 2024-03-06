@@ -8,6 +8,7 @@ import image6 from "./../assets/img/pro-6.jpg";
 import StarRating from "../components/starRating";
 import AfterpayLogo from "../components/afterPayLogo";
 import CustomAccordion from "../components/customAccordion";
+import Slider from "../components/imageSlider";
 
 const ProductDetails = () => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -284,13 +285,15 @@ const ProductDetails = () => {
           />
         </div>
       </div>
+      <Slider title={"YOU MAY ALSO LIKE"} />
+
       <section>
         <div className="flex flex-col justify-center items-center">
           <p className="number-heading">{averageRating}</p>
           <StarRating averageRating={averageRating} />
           <p>BASED ON {totalRatings} REVIEWS</p>
         </div>
-        <div className="border-t border-gray-200 mt-3 py-5 mx-5">
+        <div className="border-t border-gray-200 mt-3 py-5 mx-16">
           <div className="flex justify-between">
             <div className="flex justify-start gap-4">
               <p className="font-semibold">EMMA C.</p>
