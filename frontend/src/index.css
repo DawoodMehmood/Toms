@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  font-family: "Roboto";
+  font-family: 'Montserrat';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -22,6 +22,7 @@ code {
   color: blue;
 }
 
+
 h1 {
   font-size: 52px;
   font-weight: 900;
@@ -36,7 +37,7 @@ h4 {
   color: #404040;
 }
 
-ul {
+.product-details ul {
   list-style-type: disc;
   /* Change bullet type */
 }
