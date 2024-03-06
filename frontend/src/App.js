@@ -7,6 +7,7 @@ import "./components/components.css";
 import ProductDetails from "./pages/productDetails";
 import Navbar from "./components/navbar";
 import ScrollToTopButton from "./components/scrollToTopButton";
+import Footer from "./components/footer";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={<Navigate to="/home" />}></Route>
       </Routes>
       <ScrollToTopButton />
+      <Footer />
     </div>
   );
 }
