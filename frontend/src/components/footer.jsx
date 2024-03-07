@@ -274,7 +274,7 @@ const Footer = () => {
                 </li>
                 <li className="list-payment__item">
                   <svg
-                    class="icon icon--full-color"
+                    className="icon icon--full-color"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
                     role="img"

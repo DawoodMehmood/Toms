@@ -1,19 +1,88 @@
-// import mongoose from "mongoose";
-// import colors from "colors"
-// import dotenv from "dotenv"
-
-const mongoose = require("mongoose");
-const colors = require("colors");
+const { Sequelize, DataTypes, Model } = require("sequelize");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`Connected to MongoDB ${conn.connection.host}`.bgMagenta.white);
-  } catch (error) {
-    console.log(`Error in running MongoDB ${error}`.bgRed.white);
-  }
+const dbConfig = {
+  host: process.env.DATABASE_HOST,
+  database: process.env.DATABASE_NAME,
+  username: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  dialect: "mysql",
+  dialectOptions: {},
 };
 
-module.exports = connectDB;
+const sequelize = new Sequelize(
+  dbConfig.database,
+  dbConfig.username,
+  dbConfig.password,
+  {
+    host: dbConfig.host,
+    dialect: dbConfig.dialect,
+    dialectOptions: dbConfig.dialectOptions,
+  }
+);
+
+async function getSchema() {
+  try {
+    const tables = await sequelize.query(
+      `
+        SELECT
+          TABLE_NAME
+        FROM
+          INFORMATION_SCHEMA.TABLES
+        WHERE
+          TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG=?
+      `,
+      { replacements: [dbConfig.database], type: Sequelize.QueryTypes.SELECT }
+    );
+
+    console.log(tables);
+  } catch (error) {
+    console.error("Error fetching tables", error);
+  }
+}
+async function getColumnDetails(tableName) {
+  try {
+    const columns = await sequelize.query(
+      `
+          SELECT
+            COLUMN_NAME,
+            DATA_TYPE
+          FROM
+            INFORMATION_SCHEMA.COLUMNS
+          WHERE
+            TABLE_NAME = ?
+          ORDER BY
+            ORDINAL_POSITION
+        `,
+      {
+        replacements: [tableName],
+        type: Sequelize.QueryTypes.SELECT,
+      }
+    );
+
+    console.log(`Columns in ${tableName}:`, columns);
+  } catch (error) {
+    console.error("Error fetching columns", error);
+  }
+}
+async function getSampleData(tableName) {
+  try {
+    const sampleData = await sequelize.query(
+      `SELECT * FROM ${tableName} ORDER BY (SELECT NULL) OFFSET 0 ROWS FETCH NEXT 15 ROWS ONLY`,
+      {
+        type: Sequelize.QueryTypes.SELECT,
+      }
+    );
+
+    console.log(`Sample data from ${tableName}:`, sampleData);
+  } catch (error) {
+    console.error("Error fetching sample data", error);
+  }
+}
+
+// getSchema();
+// getColumnDetails("users");
+// getSampleData("users");
+
+module.exports = { sequelize, DataTypes, Model };
