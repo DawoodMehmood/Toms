@@ -8,6 +8,7 @@ import ProductDetails from "./pages/productDetails";
 import Navbar from "./components/navbar";
 import ScrollToTopButton from "./components/scrollToTopButton";
 import Footer from "./components/footer";
+import AdminHome from "./admin/pages/home";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/careers" element={<Careers />}></Route>
         <Route path="/product-details" element={<ProductDetails />}></Route>
         <Route path="/home" element={<Home />}></Route>
+        <Route path="/admin" element={<AdminHome />}></Route>
         <Route path="/" element={<Navigate to="/home" />}></Route>
       </Routes>
       <ScrollToTopButton />
