@@ -16,7 +16,7 @@ import { Mousewheel, Navigation } from "swiper/modules";
 import SliderCard from "./sliderCard";
 import { SwiperNavButtons } from "./swiperNavButtons";
 
-const Slider = ({ title }) => {
+const Slider = ({ title, productsData }) => {
   const sliderSettings = {
     440: {
       slidesPerView: 1,
@@ -55,68 +55,11 @@ const Slider = ({ title }) => {
             followFinger={false}
             modules={[Mousewheel, Navigation]}
           >
-            <SwiperSlide>
-              <SliderCard
-                imageUrl={image1}
-                hoverImageUrl={image2}
-                title={"TARA LINEN SHORTS"}
-                price={"$987 AUD"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <SliderCard
-                imageUrl={image2}
-                hoverImageUrl={image3}
-                title={"ETTA HOOPS TWO TONED"}
-                price={"$987 AUD"}
-                isSoldOut={true}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <SliderCard
-                imageUrl={image3}
-                hoverImageUrl={image4}
-                title={"AZURE NECKLACE GOLD"}
-                price={"$987 AUD"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <SliderCard
-                imageUrl={image4}
-                hoverImageUrl={image5}
-                title={"AZURE NECKLACE SILVER"}
-                price={"$987 AUD"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <SliderCard
-                imageUrl={image5}
-                hoverImageUrl={image6}
-                title={"TERRA LINEN SHIRT"}
-                price={"$987 AUD"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <SliderCard
-                imageUrl={image1}
-                title={"ZEILA LINEN PANTS"}
-                price={"$987 AUD"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <SliderCard
-                imageUrl={image1}
-                title={"ZEILA LINEN TOP"}
-                price={"$987 AUD"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <SliderCard
-                imageUrl={image1}
-                title={"AURELIA EARINGS GOLD"}
-                price={"$987 AUD"}
-              />
-            </SwiperSlide>
+            {productsData?.map((product, index) => (
+              <SwiperSlide key={index}>
+                <SliderCard product={product} />
+              </SwiperSlide>
+            ))}
             <SwiperNavButtons />
           </Swiper>
         </div>
