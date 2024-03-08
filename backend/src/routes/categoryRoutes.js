@@ -8,6 +8,15 @@ router.post("/", categoryController.createCategory);
 // Get all categories
 router.get("/", categoryController.getAllCategories);
 
+// Get products of a category
+router.get("/products/:categoryId", categoryController.getProductsByCategoryId);
+
+// Get subcategories of a category
+router.get(
+  "/subcategories/:categoryId",
+  categoryController.getSubcategoriesByCategoryId
+);
+
 // Get a single category by id
 router.get("/:id", categoryController.getCategoryById);
 
