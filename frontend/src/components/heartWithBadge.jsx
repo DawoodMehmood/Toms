@@ -5,7 +5,7 @@ const HeartWithBadge = ({ count }) => {
   return (
     <div className="relative">
       <IoMdHeartEmpty size={25} />
-      <span className="absolute bottom-1 right-0 h-3 w-3 text-xxs rounded-full bg-orangeColor text-white flex items-center justify-center">
+      <span className="absolute bottom-0 left-4 h-4 w-4 text-xxs rounded-full bg-orangeColor text-white flex items-center justify-center">
         {count}
       </span>
     </div>
