@@ -1,4 +1,6 @@
 const Category = require("../models/categoryModel");
+const Product = require("../models/productModel");
+const Subcategory = require("../models/subcategoryModel");
 
 const categoryController = {
   // Create a new category
@@ -64,6 +66,51 @@ const categoryController = {
       }
     } catch (error) {
       res.status(400).send(error);
+    }
+  },
+  getProductsByCategoryId: async (req, res) => {
+    try {
+      const categoryId = req.params.categoryId;
+      const products = await Product.findAll({
+        include: [
+          {
+            model: Subcategory,
+            required: true, // This makes it an INNER JOIN
+            include: [
+              {
+                model: Category,
+                where: { category_id: categoryId }, // Ensure this matches your column name in the Category model
+                required: true, // This makes it an INNER JOIN
+              },
+            ],
+          },
+        ],
+      });
+      res.json(products);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Error fetching products by category", error });
+    }
+  },
+
+  getSubcategoriesByCategoryId: async (req, res) => {
+    try {
+      const categoryId = req.params.categoryId;
+      const subcategories = await Subcategory.findAll({
+        where: { category_id: categoryId },
+      });
+
+      if (subcategories) {
+        res.json(subcategories);
+      } else {
+        res.status(404).send({
+          message: "Subcategories not found for the provided category ID",
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+      res.status(500).send({ message: "Error fetching subcategories", error });
     }
   },
 };
