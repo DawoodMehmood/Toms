@@ -1,10 +1,14 @@
 import React from "react";
 import ProductForm from "../components/productForm";
+import CategoryForm from "../components/categoryForm";
+import SubcategoryForm from "../components/subcategoryForm";
 
 const AdminHome = () => {
   return (
-    <div className="flex items-center justify-center my-10">
+    <div className="flex flex-col items-center justify-center gap-10">
       <ProductForm />
+      <CategoryForm />
+      <SubcategoryForm />
     </div>
   );
 };
