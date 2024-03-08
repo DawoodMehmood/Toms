@@ -6,11 +6,11 @@ const Careers = () => {
   return (
     <>
       <div className="mx-20">
-        <h1 className="flex items-center">WANT TO WORK WITH US?</h1>
+        <h1 className="flex items-center bigText">WANT TO WORK WITH US?</h1>
         <br />
         <p className="font-bold">
           Please apply to{" "}
-          <a href="mailto:careers@vrggrl.com">careers@vrggrl.com</a>
+          <a href="mailto:careers@feminadubai.com">careers@vrggrl.com</a>
         </p>
         <br />
         <p>All roles are based in Brisbane, Australia.</p>
@@ -125,7 +125,7 @@ const Careers = () => {
           If this sounds like you, please apply
           <strong>
             {" "}
-            <a>via SEEK here.</a>
+            <a href="#">via SEEK here.</a>
           </strong>
         </div>
       </div>

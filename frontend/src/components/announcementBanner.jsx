@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   const messages = [
@@ -27,9 +28,9 @@ const Banner = () => {
       <div
         className={`h-[40px] flex items-center justify-center transition-opacity duration-1000 ${opacity} text-sm tracking-widest unselectable`}
       >
-        <a href={messages[currentMessageIndex].link} className="">
+        <Link to={messages[currentMessageIndex].link} className="">
           {messages[currentMessageIndex].text}
-        </a>
+        </Link>
       </div>
     </header>
   );

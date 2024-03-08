@@ -1,11 +1,12 @@
 import React from "react";
 import CustomAccordion from "../components/customAccordion";
+import { Link } from "react-router-dom";
 
 const FAQS = () => {
   return (
     <>
       <div className="flex flex-col mx-20">
-        <h1 className="">FAQS</h1>
+        <h1 className="bigText">FAQS</h1>
         <section>
           <CustomAccordion
             isOpen={true}
@@ -30,17 +31,17 @@ const FAQS = () => {
             content={
               <p>
                 If an item is out of stock please contact us{" "}
-                <a href="/contact" className="links">
+                <Link to="/pages/contact" className="links">
                   via our contact form
-                </a>{" "}
+                </Link>{" "}
                 and we will endeavour to reply to you as soon as possible to let
                 you know if and when an item will be restocked. If you would
                 like to be notified when an item is restocked, select the
                 product and size you want and click on "Notify Me" to enter your
                 email. <br></br>Make sure to check our{" "}
-                <a href="/coming-soon" className="links">
+                <Link to="/pages/coming-soon" className="links">
                   Coming Soon
-                </a>{" "}
+                </Link>{" "}
                 page for any items we'll be restocking.
               </p>
             }
@@ -66,9 +67,9 @@ const FAQS = () => {
                 in original condition with the tags still attached (excluding
                 SALE ITEMS, ACCESSORIES AND INTIMATES). We offer simple returns
                 for all orders. For further information, please visit our{" "}
-                <a href="/returns" className="links">
+                <Link to="/pages/returns" className="links">
                   RETURNS PAGE
-                </a>
+                </Link>
                 . Additionally, please allow up to 4 weeks for returns to reach
                 us from the US.
               </p>
@@ -80,9 +81,9 @@ const FAQS = () => {
               <p>
                 Shipping costs and timeframes vary from country to country. We
                 recommend visiting our{" "}
-                <a href="/shipping&delivery" className="links">
+                <Link to="/shipping-delivery" className="links">
                   SHIPPING & DELIVERY
-                </a>{" "}
+                </Link>{" "}
                 page for a detailed outline of international shipping cost and
                 timeframes. In Australia we offer free standard shipping for
                 orders over $130 AUD and in the US we offer free standard
@@ -117,9 +118,9 @@ const FAQS = () => {
                 checkout. If your email address is incorrect, be sure to update
                 it in your VRG GRL account for next time. If you still cannot
                 locate your confirmation email, get in touch with us via our{" "}
-                <a href="/contact" className="links">
+                <Link to="/pages/contact" className="links">
                   contact form
-                </a>
+                </Link>
                 .
               </p>
             }
@@ -149,9 +150,9 @@ const FAQS = () => {
                 within 14 days. For international customers, we ask that you
                 post your return within 7 days of processing it online. You can
                 view more information on our{" "}
-                <a href="/returns" className="links">
+                <Link to="/pages/returns" className="links">
                   RETURNS PAGE
-                </a>
+                </Link>
                 .
               </p>
             }

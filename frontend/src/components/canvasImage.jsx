@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CanvasImage = ({ imageUrl, path }) => {
   return (
     <section>
       <div className="w-full my-10">
-        <a href={path}>
+        <Link to={path}>
           <img src={imageUrl} alt="canvas" />
-        </a>
+        </Link>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import googlePlayStore from "../assets/img/playstore.jpg";
 import applePlayStore from "../assets/img/apple.jpg";
 import logo from "../assets/img/logo.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -16,64 +17,70 @@ const Footer = () => {
               <div className="flex flex-col gap-3 my-10">
                 <p className="font-bold fu-hdg">CUSTOMER CARE</p>
                 <div className="flex flex-col gap-1 text-gray-700">
-                  <a href="contact.php" className=" text-decoration-none">
+                  <Link to="/pages/contact" className=" text-decoration-none">
                     CONTACT US
-                  </a>
-                  <a href="returns.php" className=" text-decoration-none">
+                  </Link>
+                  <Link href="/pages/returns" className=" text-decoration-none">
                     RETURNS
-                  </a>
-                  <a
-                    href="shipping-delivery.php"
+                  </Link>
+                  <Link
+                    to="/pages/shipping-delivery"
                     className=" text-decoration-none"
                   >
                     SHIPPING & DELIVERY
-                  </a>
-                  <a href="faq.php" className=" text-decoration-none">
+                  </Link>
+                  <Link to="/pages/faqs" className=" text-decoration-none">
                     FAQ
-                  </a>
-                  <a href="sizing.php" className=" text-decoration-none">
+                  </Link>
+                  <Link to="/pages/sizing" className=" text-decoration-none">
                     SIZE GUIDE
-                  </a>
-                  <a href="#" className=" text-decoration-none">
+                  </Link>
+                  <Link
+                    to="/pages/terms-and-conditions"
+                    className=" text-decoration-none"
+                  >
                     TERMS & CONDITIONS
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="flex flex-col gap-3 my-10">
                 <p className="font-bold fu-hdg">DISCOVER</p>
                 <div className="flex flex-col gap-1 text-gray-700">
-                  <a href="about.php" className=" text-decoration-none">
+                  <Link href="/pages/about" className=" text-decoration-none">
                     ABOUT US
-                  </a>
-                  <a
-                    href="sustainability.php"
+                  </Link>
+                  <Link
+                    to="/pages/sustainability"
                     className=" text-decoration-none"
                   >
                     SUSTAINABILITY
-                  </a>
+                  </Link>
 
-                  <a href="careers.php" className=" text-decoration-none">
+                  <Link href="/pages/careers" className=" text-decoration-none">
                     CAREERS
-                  </a>
-                  <a href="rewards.php" className=" text-decoration-none">
+                  </Link>
+                  <Link href="/pages/rewards" className=" text-decoration-none">
                     MEMBERSHIP
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="flex flex-col gap-3 my-10">
                 <p className="font-bold fu-hdg">MY ACCOUNT</p>
                 <div className="flex flex-col gap-1 text-gray-700">
-                  <a href="login.php" className=" text-decoration-none">
+                  <Link href="/pages/login" className=" text-decoration-none">
                     LOGIN
-                  </a>
+                  </Link>
 
-                  <a href="register.php" className=" text-decoration-none">
+                  <Link
+                    href="/pages/register"
+                    className=" text-decoration-none"
+                  >
                     CREATE ACCOUNT
-                  </a>
+                  </Link>
 
-                  <a href="account.php" className=" text-decoration-none">
+                  <Link to="/pages/account" className=" text-decoration-none">
                     MY ACCOUNT
-                  </a>
+                  </Link>
                 </div>
                 <div id="findUs" className="mt-5 ">
                   <span className="fu-hdg ">FIND US</span>
@@ -206,19 +213,25 @@ const Footer = () => {
               <ul className="list-unstyled flex flex-wrap gap-3">
                 <li>
                   <span>© 2024, </span>
-                  <a href="#" className="text-decoration-none text-black">
-                    VRG GRL
-                  </a>
+                  <Link to="/" className="text-decoration-none text-black">
+                    femina dubai
+                  </Link>
                 </li>
                 <li>
-                  <a className="text-decoration-none text-black" href="#">
+                  <Link
+                    className="text-decoration-none text-black"
+                    to="/pages/privacy-policy"
+                  >
                     PRIVACY POLICY
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="text-decoration-none text-black" href="#">
+                  <Link
+                    className="text-decoration-none text-black"
+                    to="/pages/refund-policy"
+                  >
                     REFUND POLICY
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

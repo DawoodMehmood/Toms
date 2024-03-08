@@ -23,7 +23,7 @@ code {
 }
 
 
-h1 {
+h1.bigText {
   font-size: 52px;
   font-weight: 900;
   margin: 5px 0 10px 0;
@@ -43,7 +43,7 @@ h4 {
 }
 
 @media screen and (max-width: 749px) {
-  h1 {
+  h1.bigText {
     font-size: 40px;
   }
 }

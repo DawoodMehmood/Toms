@@ -5,7 +5,9 @@ const TermsAndConditions = () => {
   return (
     <>
       <div className="mx-20">
-        <h1 className="flex items-center justify-center">Terms of Service</h1>
+        <h1 className="flex items-center justify-center bigText">
+          Terms of Service
+        </h1>
         <HeadingWithPara
           heading={<p>Promotions & Discounts</p>}
           content={
