@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import image1 from "./../assets/img/pro-1.jpg";
-import image2 from "./../assets/img/pro-2.jpg";
-import image3 from "./../assets/img/pro-3.jpg";
-import image4 from "./../assets/img/pro-4.jpg";
-import image5 from "./../assets/img/pro-5.jpg";
-import image6 from "./../assets/img/pro-6.jpg";
 import StarRating from "../components/starRating";
 import AfterpayLogo from "../components/afterPayLogo";
 import CustomAccordion from "../components/customAccordion";
 import Slider from "../components/imageSlider";
+import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
+import { Link, useLocation } from "react-router-dom";
 
 const ProductDetails = () => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const location = useLocation();
+  const product = location.state?.productData;
+  const [isFavorited, setIsFavorited] = useState(false);
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+  const toggleFavorite = (event) => {
+    setIsFavorited(!isFavorited);
   };
 
   useEffect(() => {
@@ -51,41 +50,30 @@ const ProductDetails = () => {
   const totalRatings = ratings.length;
   const averageRating = ratings.reduce((a, b) => a + b, 0) / totalRatings;
   console.log(averageRating);
-
+  if (!product) {
+    return <div>Product not found</div>;
+  }
   return (
-    <section className="py-5">
+    <section className="mx-5 my-10">
       <div className="mx-auto grid grid-cols-1 sm:grid-cols-12">
         <div className="div1 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:col-span-6 md:col-span-7 ">
-          <div>
-            <img className="w-full" src={image1} alt="Image 1" />
-          </div>
-          <div>
-            <img className="w-full" src={image2} alt="Image 2" />
-          </div>
-          <div>
-            <img className="w-full" src={image3} alt="Image 3" />
-          </div>
-          <div>
-            <img className="w-full" src={image4} alt="Image 4" />
-          </div>
-          <div>
-            <img className="w-full" src={image5} alt="Image 5" />
-          </div>
-          <div>
-            <img className="w-full" src={image6} alt="Image 6" />
-          </div>
+          {product.image_urls.map((url, index) => (
+            <div key={index}>
+              <img src={url} alt={`Product ${index + 1}`} className="w-full" />
+            </div>
+          ))}
         </div>
 
         <div className="div2 sm:col-span-6 md:col-span-5 my-4 mx-3 ">
-          <div className="flex items-center ">
-            <h4>FRANCA KNIT CARDIGAN PINK</h4>
-            <i
-              className={`fa fa-heart mx-3${
-                isFavorite ? " text-red-500" : " text-gray-500"
-              } `}
-              onClick={toggleFavorite}
-              style={{ fontSize: "1.2rem" }}
-            />
+          <div className="flex items-center justify-between">
+            <h4>{product.product_name.toUpperCase()}</h4>
+            <button onClick={toggleFavorite}>
+              {isFavorited ? (
+                <IoMdHeart size={25} />
+              ) : (
+                <IoMdHeartEmpty size={25} />
+              )}
+            </button>
           </div>
 
           <div className="flex justify-start items-center">
@@ -94,7 +82,7 @@ const ProductDetails = () => {
           </div>
 
           <p className="small-size my-2">
-            <strong>$50.5 UAD</strong>
+            <strong>{product.price} AED</strong>
           </p>
           <br />
           <p className="afterpay-paragraph ">
@@ -106,36 +94,24 @@ const ProductDetails = () => {
           <br />
           <p>
             Earn <strong>119</strong> Club Monterosso Points.{"  "}
-            <a>
-              <strong>JOIN NOW</strong>
-            </a>
+            <Link to="#">
+              <strong className="text-orangeColor">JOIN NOW</strong>
+            </Link>
           </p>
           <br />
-          <p>
-            Embrace the chill and cosy up in the Franca Cardigan. With its
-            beautiful pink hues, oversized fit, and puffy sleeves, it's the
-            perfect layering piece to pair with your favourite slip dress as the
-            weather cools.
-          </p>
+          <p>{product.description}</p>
           <br />
           <div>
             <h6>COLOUR</h6>
 
             <div className="flex flex-row gap-2 small-size py-2">
-              <a href="" className="color-select">
-                <img
-                  loading="lazy"
-                  src="//www.vrggrl.com/cdn/shop/files/Screenshot_2023-09-25_at_4.31.41_pm.png?v=1920025388866777920"
-                  alt="colour-swatch-image"
-                ></img>
-              </a>
-              <a href="" className="color-select">
-                <img
-                  loading="lazy"
-                  src="//www.vrggrl.com/cdn/shop/files/Screen_Shot_2023-09-27_at_11.28.07_am.png?v=10396904634024241149"
-                  alt="colour-swatch-image"
-                ></img>
-              </a>
+              <img
+                loading="lazy"
+                src={product.color_tile_image}
+                alt="colour-swatch-image"
+                width={"30px"}
+                height={"30px"}
+              ></img>
             </div>
           </div>
 
@@ -144,41 +120,43 @@ const ProductDetails = () => {
             <div className="flex justify-between items-center my-2">
               <div className="flex flex-row gap-2 small-size">
                 <div className="px-2 py-1 bg-gray-200 rounded">
-                  <a href="#" className="text-decoration-none text-dark">
+                  <Link to="#" className="text-decoration-none text-dark">
                     XS
-                  </a>
+                  </Link>
                 </div>
                 <div className="px-3 py-1 bg-gray-200 rounded">
-                  <a href="#" className="text-decoration-none text-dark">
+                  <Link to="#" className="text-decoration-none text-dark">
                     S
-                  </a>
+                  </Link>
                 </div>
                 <div className="px-3 py-1 bg-gray-200 rounded">
-                  <a href="#" className="text-decoration-none text-dark">
+                  <Link to="#" className="text-decoration-none text-dark">
                     M
-                  </a>
+                  </Link>
                 </div>
                 <div className="px-3 py-1 bg-gray-200 rounded">
-                  <a href="#" className="text-decoration-none text-dark">
+                  <Link to="#" className="text-decoration-none text-dark">
                     L
-                  </a>
+                  </Link>
                 </div>
                 <div className="px-2 py-1 bg-gray-200 rounded">
-                  <a href="#" className="text-decoration-none text-dark">
+                  <Link to="#" className="text-decoration-none text-dark">
                     XL
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div>
                 <p>
-                  <a href="#" className="text-dark small-size underline">
+                  <Link to="#" className="text-dark small-size underline">
                     VIEW SIZE GUIDE
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>
           </div>
-          <button className="w-full bg-gray-200 py-2 my-2">ADD TO CART</button>
+          <button className="w-full bg-gray-200 py-2 my-2 hover:bg-orangeColor hover:text-white">
+            ADD TO CART
+          </button>
           <div className="grid grid-cols-2 gap-3 small-size my-2">
             <div className="grid grid-rows-2">
               <div className="flex items-center justify-center">
@@ -215,15 +193,9 @@ const ProductDetails = () => {
             heading={<p>PRODUCT DETAILS</p>}
             content={
               <ul className="mx-4">
-                <li>Cut out detail</li>
-                <li>Side zip opening</li>
-                <li>Cut on the bias</li>
-                <li>
-                  As this is a lightcoloured fabric we recommend wearing this
-                  with nude undergarments
-                </li>
-                <li>55% Viscose / 45% Rayon</li>
-                <li>Cold Hand Wash / Cool Iron</li>
+                {product.product_details.split("\n").map((detail, index) => (
+                  <li key={index}>{detail}</li>
+                ))}
               </ul>
             }
           />
@@ -231,32 +203,26 @@ const ProductDetails = () => {
             heading={<p>SIZE & FIT</p>}
             content={
               <ul className="mx-4">
-                <li>
-                  Length 145cm / 57in (taken from a size AU 8 shoulder to hem)
-                </li>
-                <li>
-                  Length may differ depending on your shape as this dress is
-                  bias cut
-                </li>
-                <li>Runs true to size </li>
-                <li>Model wears size AU 8</li>
-                <li>Model height 165cm / 5ft 4in</li>
+                {product.size_and_fit.split("\n").map((detail, index) => (
+                  <li key={index}>{detail}</li>
+                ))}
               </ul>
             }
           />
+
           <CustomAccordion
             heading={<p>SHIPPING & RETURNS</p>}
             content={
               <p>
                 To see delivery options for your location,{" "}
-                <a className="underline" href="#">
+                <Link className="underline" to="#">
                   click here.
-                </a>
+                </Link>
                 <br /> Full priced items are eligible for returns within 30
                 days. For more information, please visit our{" "}
-                <a className="underline" href="#">
+                <Link className="underline" to="#">
                   returns policy here.
-                </a>
+                </Link>
               </p>
             }
           />
@@ -265,9 +231,9 @@ const ProductDetails = () => {
             content={
               <p>
                 Have a question? Get in touch with our team via{" "}
-                <a className="underline" href="#">
+                <Link className="underline" to="#">
                   our contact form here.
-                </a>
+                </Link>
                 <br />
                 <br />
                 E:{" "}
@@ -275,7 +241,7 @@ const ProductDetails = () => {
                   info@vrggrl.com
                 </a>
                 <br /> PH:{" "}
-                <a className="underline" href="3">
+                <a className="underline" href="#">
                   +61 7 3063 4242
                 </a>{" "}
                 <br />
@@ -285,6 +251,7 @@ const ProductDetails = () => {
           />
         </div>
       </div>
+
       <Slider title={"YOU MAY ALSO LIKE"} />
 
       <section>
