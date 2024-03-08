@@ -1,4 +1,5 @@
 const Subcategory = require("../models/subcategoryModel");
+const Product = require("../models/productModel");
 
 const subcategoryController = {
   // Create a new subcategory
@@ -66,6 +67,32 @@ const subcategoryController = {
       }
     } catch (error) {
       res.status(400).json({ message: "Error deleting subcategory", error });
+    }
+  },
+  getProductsBySubcategory: async (req, res) => {
+    try {
+      const subcategoryId = req.params.subcategoryId;
+      const products = await Product.findAll({
+        where: {
+          subcategory_id: subcategoryId, // Match products by subcategory_id
+        },
+        include: [
+          {
+            model: Subcategory, // Include subcategory details
+            where: { subcategory_id: subcategoryId }, // Match subcategory by ID
+            required: true,
+          },
+          {
+            model: Category, // Optionally include category details if needed
+            required: true,
+          },
+        ],
+      });
+      res.json(products);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Error fetching products by subcategory", error });
     }
   },
 };
