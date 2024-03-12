@@ -191,10 +191,10 @@ function ProductForm({ initialData }) {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            onInput={(e) => {
-              e.target.style.height = "auto"; // Reset height so it can shrink if text is removed
-              e.target.style.height = e.target.scrollHeight + "px"; // Set the height to fit content
-            }}
+              onInput={(e) => {
+                e.target.style.height = "auto"; // Reset height so it can shrink if text is removed
+                e.target.style.height = e.target.scrollHeight + "px"; // Set the height to fit content
+              }}
             className="mt-1 p-2 block w-full rounded border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
         </div>
