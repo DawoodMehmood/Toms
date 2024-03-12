@@ -39,7 +39,7 @@ const Slider = ({ title, productsData }) => {
   return (
     <section>
       <div className="mx-16 mt-16">
-        <div className="text-3xl font-semibold tracking-4">{title}</div>
+        <div className="text-3xl serif font-semibold tracking-4">{title}</div>
         <div className="mx-5">
           <Swiper
             direction={"horizontal"}

@@ -4,10 +4,10 @@ const ListOfHeading = ({ order, heading }) => {
   return (
     <section>
       <div className="my-2">
-        <div className="number-heading font-bold my-4 flex justify-center">
+        <div className="number-heading font-bold my-4 text-orangeColor flex justify-center">
           {order}
         </div>
-        <div className="text-center">{heading}</div>
+        <div className="text-center serif">{heading}</div>
       </div>
     </section>
   );
