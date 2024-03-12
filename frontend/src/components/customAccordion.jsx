@@ -15,7 +15,7 @@ const CustomAccordion = ({ heading, content, isOpen }) => {
           className="w-full py-4 cursor-pointer flex justify-between items-center select-none hover:underline hover:underline-offset-4"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          <span className="font-semibold">{heading}</span>
+          <span className="font-semibold ">{heading}</span>
           <span className="hover:no-underline">
             {isExpanded ? <FaMinus /> : <FaPlus />}
           </span>

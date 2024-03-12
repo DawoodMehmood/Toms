@@ -56,7 +56,7 @@ const Footer = () => {
                     SUSTAINABILITY
                   </Link>
 
-                  <Link href="/pages/careers" className=" text-decoration-none">
+                  <Link to="/pages/careers" className=" text-decoration-none">
                     CAREERS
                   </Link>
                   <Link href="/pages/rewards" className=" text-decoration-none">
@@ -208,9 +208,9 @@ const Footer = () => {
             &copy; 2024 Famina. All Rights Reserved.
           </div> */}
         <div className="container ">
-          <div className="flex flex-wrap sm:flex-nowrap gap-4 items-center justify-center sm:justify-between py-12 border-t border-gray-300">
+          <div className="flex flex-wrap sm:flex-nowrap gap-4 items-center small-size  justify-center sm:justify-between py-12 border-t border-gray-300">
             <div id="copyRight" className="">
-              <ul className="list-unstyled flex flex-wrap gap-3">
+              <ul className="list-unstyled flex flex-wrap gap-3 ">
                 <li>
                   <span>© 2024, </span>
                   <Link to="/" className="text-decoration-none text-black">
