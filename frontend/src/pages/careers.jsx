@@ -5,7 +5,7 @@ import ListOfHeading from "../components/listOfHeading";
 const Careers = () => {
   return (
     <>
-      <div className="mx-20">
+      <div className="mx-24 my-12">
         <h1 className="flex items-center bigText">WANT TO WORK WITH US?</h1>
         <br />
         <p className="font-bold">
