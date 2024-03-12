@@ -40,7 +40,7 @@ Product.init(
     },
     discount_price: {
       type: DataTypes.DECIMAL(10, 2),
-      defaultValue: "",
+      defaultValue: 0,
       allowNull: true,
     },
     image_urls: {

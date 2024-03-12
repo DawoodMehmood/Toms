@@ -10,6 +10,7 @@ import AdminHome from "./admin/pages/home";
 import UserLayout from "./layouts/userLayout";
 import AdminLayout from "./layouts/adminLayout";
 import Category from "./pages/category";
+import AdminFaqs from "./admin/pages/faq";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
 
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<AdminHome />}></Route>
+          <Route path="/admin/faqs" element={<AdminFaqs />}></Route>
         </Route>
       </Routes>
       <ScrollToTopButton />
