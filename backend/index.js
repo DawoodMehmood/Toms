@@ -11,6 +11,7 @@ const productRoutes = require("./src/routes/productRoutes");
 const categoryRoutes = require("./src/routes/categoryRoutes");
 const subcategoryRoutes = require("./src/routes/subcategoryRoutes");
 const colorRoutes = require("./src/routes/colorRoutes");
+const faqsRoutes = require("./src/routes/faqsRoutes");
 
 // const middleware = require("./middleware/jwtMiddleware");
 dotenv.config();
@@ -46,6 +47,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/subcategories", subcategoryRoutes);
 app.use("/api/colors", colorRoutes);
+app.use("/api/faqs", faqsRoutes);
 // app.use("/api/credential", middleware, credentialRoutes);
 // app.use("/auth/admin", adminRoutes);
 // app.post("/api/token/validate", middleware, (req, res) => {
