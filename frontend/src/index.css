@@ -69,6 +69,25 @@ h4 {
   display: none;
 }
 
+/*Size Chart Page*/
+.size-guide__table, .size-guide__half-table {
+  border: 1px solid;
+}
+#sizing tbody tr{
+  border: 0;
+}
+#sizing tbody tr:last-child td{
+  border-bottom: none;
+}
+#sizing thead tr th {
+  padding: 20px;
+  background-color: var(--footer-background-primary-color);
+  border-bottom: 1px solid;
+}
+#sizing tbody tr td{
+  padding: 20px;
+}
+
 /* Hide scrollbar for Chrome, Safari, and Opera */
 html::-webkit-scrollbar {
   display: none;
