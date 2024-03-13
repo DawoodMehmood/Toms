@@ -25,21 +25,19 @@ const Navbar = () => {
     }
   };
 
-  const fetchSubCategories = async () => {
+  const fetchSubCategoriesForAllCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/subcategories"
+        `http://localhost:5000/api/subcategories`
       );
-      setCategories(response.data.slice(0, 4));
+      setSubCategories(response.data);
+      console.log(response.data);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error("Error fetching subcategories:", error);
     }
   };
-
-  console.log(subCategories);
   useEffect(() => {
     fetchCategories();
-    fetchSubCategories();
   }, []);
 
   const toggleMenu = () => {
@@ -48,6 +46,9 @@ const Navbar = () => {
 
   const toggleClothingDropdown = () => {
     setIsClothingDropdownOpen(!isClothingDropdownOpen);
+    if (!isClothingDropdownOpen) {
+      fetchSubCategoriesForAllCategories();
+    }
   };
 
   return (
@@ -83,13 +84,14 @@ const Navbar = () => {
                 <span className="text-sm small-size">SEARCH</span>
               </div>
               <HeartWithBadge count={15} />
-              <CiUser size={26} />
+              <CiUser  size={26} />
               <CartWithBadge count={1} />
             </div>
           </div>
 
           <div className="hidden lg:flex py-5 px-7 items-end small-size justify-between text-sm text-gray-500">
             <div>NEW</div>
+
             <div
               onMouseEnter={toggleClothingDropdown}
               onMouseLeave={toggleClothingDropdown}
@@ -97,21 +99,26 @@ const Navbar = () => {
               <span>CLOTHING</span>
               {isClothingDropdownOpen && (
                 <div className="flex flex-row gap-12 justify-start absolute left-0 right-0 bg-white shadow-lg mt-2 p-4 z-10">
-                  <div className="flex flex-col gap-1 px-4 py-2">
-                    <a className="font-semibold my-2">Dresses</a>
-                    <a>Mini Dresses</a>
-                    <a>Jumbo Dresses</a>
-                  </div>
-                  <div className="flex flex-col gap-1 px-4 py-2">
-                    <a className="font-semibold my-2">Dresses</a>
-                    <a>Mini Dresses</a>
-                    <a>Jumbo Dresses</a>
-                  </div>
-                  <div className="flex gap-1 flex-col px-4 py-2">
-                    <a className="font-semibold my-2">Dresses</a>
-                    <a>Mini Dresses</a>
-                    <a>Jumbo Dresses</a>
-                  </div>
+                  {categories.map((category) => (
+                    <div
+                      key={category.category_id}
+                      className="flex flex-col gap-2 px-4 py-2"
+                    >
+                      <span className="font-semibold py-2">
+                        {category.category_name}
+                      </span>
+                      {subCategories
+                        .filter(
+                          (subCategory) =>
+                            subCategory.category_id === category.category_id
+                        )
+                        .map((subCategory) => (
+                          <a key={subCategory.subcategory_id}>
+                            {subCategory.subcategory_name}
+                          </a>
+                        ))}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
