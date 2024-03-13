@@ -15,6 +15,7 @@ import Contact from "./pages/contact";
 import SizeChart from "./pages/sizes";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import Returns from "./pages/returns";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/pages/careers" element={<Careers />}></Route>
           <Route path="/pages/contact" element={<Contact />}></Route>
           <Route path="/pages/size-chart" element={<SizeChart />}></Route>
+          <Route path="/pages/returns" element={<Returns />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route

@@ -20,7 +20,7 @@ const Footer = () => {
                   <Link to="/pages/contact" className=" text-decoration-none">
                     CONTACT US
                   </Link>
-                  <Link href="/pages/returns" className=" text-decoration-none">
+                  <Link to="/pages/returns" className=" text-decoration-none">
                     RETURNS
                   </Link>
                   <Link
