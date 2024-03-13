@@ -32,7 +32,10 @@ const Footer = () => {
                   <Link to="/pages/faqs" className=" text-decoration-none">
                     FAQ
                   </Link>
-                  <Link to="/pages/sizing" className=" text-decoration-none">
+                  <Link
+                    to="/pages/size-chart"
+                    className=" text-decoration-none"
+                  >
                     SIZE GUIDE
                   </Link>
                   <Link
@@ -67,7 +70,7 @@ const Footer = () => {
               <div className="flex flex-col gap-3 my-10">
                 <p className="font-bold fu-hdg">MY ACCOUNT</p>
                 <div className="flex flex-col gap-1 text-gray-700">
-                  <Link href="/pages/login" className=" text-decoration-none">
+                  <Link to="/login" className=" text-decoration-none">
                     LOGIN
                   </Link>
 
