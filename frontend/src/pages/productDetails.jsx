@@ -147,7 +147,10 @@ const ProductDetails = () => {
               </div>
               <div>
                 <p>
-                  <Link to="#" className="text-dark small-size underline">
+                  <Link
+                    to="/pages/size-chart"
+                    className="text-dark small-size underline"
+                  >
                     VIEW SIZE GUIDE
                   </Link>
                 </p>
