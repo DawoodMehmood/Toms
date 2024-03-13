@@ -11,6 +11,10 @@ import UserLayout from "./layouts/userLayout";
 import AdminLayout from "./layouts/adminLayout";
 import Category from "./pages/category";
 import AdminFaqs from "./admin/pages/faq";
+import Contact from "./pages/contact";
+import SizeChart from "./pages/sizes";
+import Login from "./pages/login";
+import Register from "./pages/register";
 
 function App() {
   return (
@@ -29,6 +33,10 @@ function App() {
           <Route path="/pages/faqs" element={<FAQS />}></Route>
           <Route path="/category/:text" element={<Category />}></Route>
           <Route path="/pages/careers" element={<Careers />}></Route>
+          <Route path="/pages/contact" element={<Contact />}></Route>
+          <Route path="/pages/size-chart" element={<SizeChart />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
           <Route
             path="/product-details/:id"
             element={<ProductDetails />}
