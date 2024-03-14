@@ -16,6 +16,7 @@ import SizeChart from "./pages/sizes";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Returns from "./pages/returns";
+import ShippingAndDelivery from "./pages/shipping&delivery";
 
 function App() {
   return (
@@ -39,6 +40,10 @@ function App() {
           <Route path="/pages/returns" element={<Returns />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
+          <Route
+            path="/pages/shipping-delivery"
+            element={<ShippingAndDelivery />}
+          ></Route>
           <Route
             path="/product-details/:id"
             element={<ProductDetails />}
