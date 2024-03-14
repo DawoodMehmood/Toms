@@ -15,12 +15,12 @@ code {
 }
 
 /*font families*/
-.serif{
+.serif {
   font-family: serif;
 }
 
 .small-size {
-  font-size: small;
+  font-size: 14px;
 }
 
 .links {
@@ -41,7 +41,7 @@ h4 {
   color: #404040;
 }
 
-.product-details ul {
+ul {
   list-style-type: disc;
   /* Change bullet type */
 }
@@ -70,13 +70,14 @@ h4 {
 }
 
 /*Size Chart Page*/
-.size-guide__table, .size-guide__half-table {
+.size-guide__table,
+.size-guide__half-table {
   border: 1px solid;
 }
-#sizing tbody tr{
+#sizing tbody tr {
   border: 0;
 }
-#sizing tbody tr:last-child td{
+#sizing tbody tr:last-child td {
   border-bottom: none;
 }
 #sizing thead tr th {
@@ -84,7 +85,7 @@ h4 {
   background-color: var(--footer-background-primary-color);
   border-bottom: 1px solid;
 }
-#sizing tbody tr td{
+#sizing tbody tr td {
   padding: 20px;
 }
 
