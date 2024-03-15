@@ -9,12 +9,18 @@ import HeartWithBadge from "./heartWithBadge";
 import CartWithBadge from "./cartWithBadge";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Cart from "./cart";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClothingDropdownOpen, setIsClothingDropdownOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
 
   const fetchCategories = async () => {
     try {
@@ -84,8 +90,11 @@ const Navbar = () => {
                 <span className="text-sm small-size">SEARCH</span>
               </div>
               <HeartWithBadge count={15} />
-              <CiUser  size={26} />
-              <CartWithBadge count={1} />
+              <CiUser size={26} />
+              <button onClick={toggleCart}>
+                <CartWithBadge count={1} />
+              </button>
+              <Cart isOpen={isCartOpen} toggleCart={toggleCart} />
             </div>
           </div>
 
