@@ -1,4 +1,4 @@
-const { sequelize, DataTypes, Model } = require("../config/dbConfig");
+import { sequelize, DataTypes, Model } from "../config/dbConfig.js";
 
 class Subcategory extends Model {}
 
@@ -17,6 +17,11 @@ Subcategory.init(
     category_id: {
       type: DataTypes.INTEGER,
       references: { model: "categories", key: "category_id" },
+      allowNull: false,
+    },
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   },
   {
@@ -27,4 +32,4 @@ Subcategory.init(
   }
 );
 
-module.exports = Subcategory;
+export default Subcategory;

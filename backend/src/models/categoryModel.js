@@ -1,4 +1,4 @@
-const { sequelize, DataTypes, Model } = require("../config/dbConfig");
+import { sequelize, DataTypes, Model } from "../config/dbConfig.js";
 
 class Category extends Model {}
 
@@ -14,6 +14,10 @@ Category.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
     sequelize,
@@ -23,4 +27,4 @@ Category.init(
   }
 );
 
-module.exports = Category;
+export default Category;

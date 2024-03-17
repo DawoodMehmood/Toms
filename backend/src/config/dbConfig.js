@@ -1,5 +1,5 @@
-const { Sequelize, DataTypes, Model } = require("sequelize");
-const dotenv = require("dotenv");
+import { Sequelize, DataTypes, Model } from "sequelize";
+import dotenv from "dotenv";
 dotenv.config();
 
 const dbConfig = {
@@ -19,6 +19,7 @@ const sequelize = new Sequelize(
     host: dbConfig.host,
     dialect: dbConfig.dialect,
     dialectOptions: dbConfig.dialectOptions,
+    logging: console.error,
   }
 );
 
@@ -85,4 +86,4 @@ async function getSampleData(tableName) {
 // getColumnDetails("users");
 // getSampleData("users");
 
-module.exports = { sequelize, DataTypes, Model };
+export { sequelize, DataTypes, Model };

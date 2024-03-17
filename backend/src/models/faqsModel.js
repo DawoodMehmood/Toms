@@ -1,4 +1,4 @@
-const { sequelize, DataTypes, Model } = require("../config/dbConfig");
+import { sequelize, DataTypes, Model } from "../config/dbConfig.js";
 
 class Faqs extends Model {}
 
@@ -15,9 +15,9 @@ Faqs.init(
       allowNull: false,
     },
     faq_description: {
-        type: DataTypes.TEXT('long'),
-        allowNull: false,
-      },
+      type: DataTypes.TEXT("long"),
+      allowNull: false,
+    },
   },
   {
     sequelize,
@@ -27,4 +27,4 @@ Faqs.init(
   }
 );
 
-module.exports = Faqs;
+export default Faqs;

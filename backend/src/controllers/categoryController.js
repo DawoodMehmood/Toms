@@ -1,6 +1,6 @@
-const Category = require("../models/categoryModel");
-const Product = require("../models/productModel");
-const Subcategory = require("../models/subcategoryModel");
+import Category from "../models/categoryModel.js";
+import Product from "../models/productModel.js";
+import Subcategory from "../models/subcategoryModel.js";
 
 const categoryController = {
   // Create a new category
@@ -72,6 +72,10 @@ const categoryController = {
     try {
       const categoryId = req.params.categoryId;
       const products = await Product.findAll({
+        where: {
+          "$Subcategory.Category.category_id$": categoryId, // Use the '$' syntax to filter on nested model properties
+          is_active: true, // Ensure only active products are fetched
+        },
         include: [
           {
             model: Subcategory,
@@ -115,4 +119,4 @@ const categoryController = {
   },
 };
 
-module.exports = categoryController;
+export default categoryController;

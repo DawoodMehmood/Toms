@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const subcategoryController = require("../controllers/subcategoryController");
+import subcategoryController from "../controllers/subcategoryController.js";
 
 router.post("/", subcategoryController.createSubcategory);
 router.get("/", subcategoryController.getAllSubcategories);
@@ -13,4 +13,4 @@ router.get(
   subcategoryController.getProductsBySubcategory
 );
 
-module.exports = router;
+export default router;

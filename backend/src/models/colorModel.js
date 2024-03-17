@@ -1,4 +1,4 @@
-const { sequelize, DataTypes, Model } = require("../config/dbConfig");
+import { sequelize, DataTypes, Model } from "../config/dbConfig.js";
 
 class Color extends Model {}
 
@@ -24,4 +24,4 @@ Color.init(
   }
 );
 
-module.exports = Color;
+export default Color;

@@ -1,5 +1,4 @@
-const Faqs = require("../models/faqsModel");
-
+import Faqs from "../models/faqsModel.js";
 
 const faqsController = {
   // Create a new faq
@@ -69,4 +68,4 @@ const faqsController = {
   },
 };
 
-module.exports = faqsController;
+export default faqsController;

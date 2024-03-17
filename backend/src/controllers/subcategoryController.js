@@ -1,5 +1,5 @@
-const Subcategory = require("../models/subcategoryModel");
-const Product = require("../models/productModel");
+import Subcategory from "../models/subcategoryModel.js";
+import Product from "../models/productModel.js";
 
 const subcategoryController = {
   // Create a new subcategory
@@ -74,16 +74,13 @@ const subcategoryController = {
       const subcategoryId = req.params.subcategoryId;
       const products = await Product.findAll({
         where: {
-          subcategory_id: subcategoryId, // Match products by subcategory_id
+          subcategory_id: subcategoryId,
+          is_active: true,
         },
         include: [
           {
             model: Subcategory, // Include subcategory details
             where: { subcategory_id: subcategoryId }, // Match subcategory by ID
-            required: true,
-          },
-          {
-            model: Category, // Optionally include category details if needed
             required: true,
           },
         ],
@@ -97,4 +94,4 @@ const subcategoryController = {
   },
 };
 
-module.exports = subcategoryController;
+export default subcategoryController;

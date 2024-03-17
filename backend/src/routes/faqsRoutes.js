@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const faqsController = require("../controllers/faqsController");
+import faqsController from "../controllers/faqsController.js";
 
 // Create a new faqs
 router.post("/", faqsController.createFaq);
@@ -17,4 +17,4 @@ router.put("/:id", faqsController.updateFaq);
 // Delete a Faq
 router.delete("/:id", faqsController.deleteFaq);
 
-module.exports = router;
+export default router;

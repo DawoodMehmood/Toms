@@ -1,4 +1,4 @@
-const Color = require("../models/colorModel");
+import Color from "../models/colorModel.js";
 
 const colorController = {
   // Create a new color
@@ -68,4 +68,4 @@ const colorController = {
   },
 };
 
-module.exports = colorController;
+export default colorController;
