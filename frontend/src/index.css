@@ -42,8 +42,17 @@ h4 {
 }
 
 ul {
-  list-style-type: disc;
+  list-style-type: disc !important;
   /* Change bullet type */
+}
+
+ul {
+  @apply list-disc list-inside;
+}
+
+li>p {
+  @apply inline;
+  /* Remove bottom margin */
 }
 
 @media screen and (max-width: 749px) {
@@ -74,17 +83,21 @@ ul {
 .size-guide__half-table {
   border: 1px solid;
 }
+
 #sizing tbody tr {
   border: 0;
 }
+
 #sizing tbody tr:last-child td {
   border-bottom: none;
 }
+
 #sizing thead tr th {
   padding: 20px;
   background-color: var(--footer-background-primary-color);
   border-bottom: 1px solid;
 }
+
 #sizing tbody tr td {
   padding: 20px;
 }
