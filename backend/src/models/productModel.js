@@ -1,4 +1,4 @@
-const { sequelize, DataTypes, Model } = require("../config/dbConfig");
+import { sequelize, DataTypes, Model } from "../config/dbConfig.js";
 
 class Product extends Model {}
 
@@ -13,13 +13,17 @@ Product.init(
     product_name: {
       type: DataTypes.STRING,
       defaultValue: "",
-      allowNull: true,
+      allowNull: false,
     },
-    description: DataTypes.TEXT,
-    price: DataTypes.DECIMAL(10, 2),
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    price: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
     subcategory_id: {
       type: DataTypes.INTEGER,
       references: { model: "subcategories", key: "subcategory_id" },
+      allowNull: false,
     },
     flag: {
       type: DataTypes.STRING,
@@ -34,33 +38,52 @@ Product.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    Is_Active: {
+    is_active: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: true,
     },
     discount_price: {
       type: DataTypes.DECIMAL(10, 2),
       defaultValue: 0,
       allowNull: true,
     },
+    discount_percentage: {
+      type: DataTypes.DECIMAL(10, 2),
+      defaultValue: 0,
+      allowNull: true,
+    },
     image_urls: {
       type: DataTypes.JSON,
-      allowNull: true,
+      allowNull: false,
       defaultValue: [],
+      set(value) {
+        // Split the string by comma and trim whitespace from each URL
+        const urlsArray = value.split(",").map((url) => url.trim());
+        this.setDataValue("image_urls", urlsArray);
+      },
     },
     is_tailorable: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    color_tile_image: DataTypes.TEXT,
+    color_tile_image: { type: DataTypes.TEXT, allowNull: false },
     variant_ids: {
       type: DataTypes.JSON,
       allowNull: true,
       defaultValue: [],
     },
-    product_details: DataTypes.TEXT,
-    size_and_fit: DataTypes.TEXT,
-    fabric: DataTypes.TEXT,
+    measurements: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: [],
+    },
+    product_details: { type: DataTypes.TEXT, allowNull: false },
+    size_and_fit: { type: DataTypes.TEXT, allowNull: false },
+    fabric: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+      allowNull: true,
+    },
   },
   {
     sequelize,
@@ -70,4 +93,4 @@ Product.init(
   }
 );
 
-module.exports = Product;
+export default Product;
