@@ -9,7 +9,6 @@ import ScrollToTopButton from "./components/scrollToTopButton";
 import AdminHome from "./admin/pages/home";
 import UserLayout from "./layouts/userLayout";
 import AdminLayout from "./layouts/adminLayout";
-import Category from "./pages/category";
 import AdminFaqs from "./admin/pages/faq";
 import Contact from "./pages/contact";
 import SizeChart from "./pages/sizes";
@@ -17,6 +16,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import Returns from "./pages/returns";
 import ShippingAndDelivery from "./pages/shipping&delivery";
+import CommonGrid from "./pages/commonGrid";
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
           ></Route>
 
           <Route path="/pages/faqs" element={<FAQS />}></Route>
-          <Route path="/category/:text" element={<Category />}></Route>
+          <Route path="/grid/:type/:name/:id" element={<CommonGrid />}></Route>
           <Route path="/pages/careers" element={<Careers />}></Route>
           <Route path="/pages/contact" element={<Contact />}></Route>
           <Route path="/pages/size-chart" element={<SizeChart />}></Route>
@@ -45,7 +45,7 @@ function App() {
             element={<ShippingAndDelivery />}
           ></Route>
           <Route
-            path="/product-details/:id"
+            path="/product-details/:name/:id"
             element={<ProductDetails />}
           ></Route>
           <Route path="/home" element={<Home />}></Route>
