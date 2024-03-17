@@ -11,38 +11,69 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Cart from "./cart";
 
+const CategoryItem = ({ category }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  return (
+    <div
+      className="relative group"
+      onMouseLeave={() => setIsDropdownOpen(false)}
+    >
+      <div
+        onMouseEnter={() => setIsDropdownOpen(true)}
+        className="cursor-pointer hover:bg-gray-100 py-2 px-4"
+      >
+        {category.name}
+      </div>
+      {isDropdownOpen && (
+        <div
+          className="absolute left-0 bg-white shadow-lg mt-1 py-2 z-10"
+          onMouseEnter={() => setIsDropdownOpen(true)}
+        >
+          {category.children.length > 0 &&
+            category.children.map((subCat) => (
+              <div
+                key={subCat.category_id}
+                className="px-4 py-2 hover:bg-gray-100"
+              >
+                <div className="font-bold">{subCat.name}</div>
+                {/* Render third level categories if any */}
+                {subCat.children.map((subSubCat) => (
+                  <div
+                    key={subSubCat.category_id}
+                    className="pl-4 py-1 hover:bg-gray-200"
+                  >
+                    {subSubCat.name}
+                  </div>
+                ))}
+              </div>
+            ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isClothingDropdownOpen, setIsClothingDropdownOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [subCategories, setSubCategories] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
 
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/categories");
-      setCategories(response.data.slice(0, 4));
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
-
-  const fetchSubCategoriesForAllCategories = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/api/subcategories`
-      );
-      setSubCategories(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching subcategories:", error);
-    }
-  };
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/categories/all"
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
     fetchCategories();
   }, []);
 
@@ -50,12 +81,12 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const toggleClothingDropdown = () => {
-    setIsClothingDropdownOpen(!isClothingDropdownOpen);
-    if (!isClothingDropdownOpen) {
-      fetchSubCategoriesForAllCategories();
-    }
-  };
+  // const toggleClothingDropdown = () => {
+  //   setIsClothingDropdownOpen(!isClothingDropdownOpen);
+  //   if (!isClothingDropdownOpen) {
+  //     fetchSubCategoriesForAllCategories();
+  //   }
+  // };
 
   return (
     <section>
@@ -98,71 +129,11 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="hidden lg:flex py-5 px-7 items-end small-size justify-between text-sm text-gray-500">
-            <div>NEW</div>
-
-            <div
-              onMouseEnter={toggleClothingDropdown}
-              onMouseLeave={toggleClothingDropdown}
-            >
-              <span>CLOTHING</span>
-              {isClothingDropdownOpen && (
-                <div className="flex flex-row gap-12 justify-start absolute left-0 right-0 bg-white shadow-lg mt-2 p-4 z-10">
-                  {categories.map((category) => (
-                    <div
-                      key={category.category_id}
-                      className="flex flex-col gap-2 px-4 py-2"
-                    >
-                      <span className="font-semibold py-2">
-                        {category.category_name}
-                      </span>
-                      {subCategories
-                        .filter(
-                          (subCategory) =>
-                            subCategory.category_id === category.category_id
-                        )
-                        .map((subCategory) => (
-                          <a key={subCategory.subcategory_id}>
-                            {subCategory.subcategory_name}
-                          </a>
-                        ))}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div>MOST LOVED</div>
-            <div>CAMPAIGNS</div>
-            <div>BACK IN STORE</div>
-            <div>EDITS</div>
-            <div>ACCESSORIES</div>
-            <div>SALE</div>
+          <div className="hidden lg:flex py-5 px-7 items-end justify-center gap-20">
+            {categories.map((category) => (
+              <CategoryItem key={category.category_id} category={category} />
+            ))}
           </div>
-
-          {isMenuOpen && (
-            <div className="lg:hidden py-5 px-7 flex flex-col items-start text-sm text-gray-500">
-              <div>NEW</div>
-              <div
-                onMouseEnter={toggleClothingDropdown}
-                onMouseLeave={toggleClothingDropdown}
-              >
-                <span>CLOTHING</span>
-                {isClothingDropdownOpen && (
-                  <div className="absolute bg-white shadow-lg mt-2 py-2 w-48 z-10">
-                    <div className="px-4 py-2">Category 1</div>
-                    <div className="px-4 py-2">Category 2</div>
-                    <div className="px-4 py-2">Category 3</div>
-                  </div>
-                )}
-              </div>
-              <div>MOST LOVED</div>
-              <div>CAMPAIGNS</div>
-              <div>BACK IN STORE</div>
-              <div>EDITS</div>
-              <div>ACCESSORIES</div>
-              <div>SALE</div>
-            </div>
-          )}
         </div>
       </nav>
     </section>
