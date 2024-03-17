@@ -102,6 +102,84 @@ li>p {
   padding: 20px;
 }
 
+/* Checkout Page styles */
+.shop-pay {
+  background-color: #390ced;
+  border: 1px solid #0000;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 15px;
+}
+.paypal {
+  padding: 13px 15px;
+  background-color: #ffc439;
+  border-radius: 5px;
+  width: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.gpay {
+  padding: 10px 15px;
+  background-color: #000;
+  border-radius: 5px;
+  width: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#checkout svg {
+  width: 100px;
+}
+.or-divider {
+  position: relative;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.or-divider:before,
+.or-divider:after {
+  content: "";
+  display: inline-block;
+  width: 45%;
+  height: 1px;
+  background-color: #ccc;
+  vertical-align: middle;
+}
+
+.or-divider:before {
+  margin-right: 10px;
+}
+
+.or-divider:after {
+  margin-left: 10px;
+}
+
+.or-text {
+  display: inline-block;
+  padding: 0 10px;
+  background-color: #fff;
+  position: relative;
+  top: -5px;
+}
+.checkoutSide {
+  background-color: var(--footer-background-primary-color);
+  position: fixed;
+  right: 0;
+  height: 100vh;
+}
+#product-details-accordion .accordion-button:not(.collapsed) {
+  border: none;
+  background-color: #fff;
+}
+#checkout a {
+  font-size: 12px;
+}
+
 /* Hide scrollbar for Chrome, Safari, and Opera */
 html::-webkit-scrollbar {
   display: none;
