@@ -17,7 +17,7 @@ const Home = () => {
     try {
       const response = await axios.get("http://localhost:5000/api/products");
       const activeProducts = response.data.filter(
-        (product) => product.Is_Active
+        (product) => product.is_active
       );
       setProducts(activeProducts);
     } catch (error) {
