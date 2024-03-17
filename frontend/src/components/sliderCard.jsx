@@ -16,7 +16,7 @@ const SliderCard = ({ product }) => {
   };
 
   const handleCardClick = () => {
-    navigate(`/product-details/${formattedName}`, {
+    navigate(`/product-details/${formattedName}/${product.product_id}`, {
       state: { productData: product },
     });
   };

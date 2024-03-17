@@ -4,12 +4,11 @@ import image1 from "./../assets/img/pro-1.jpg";
 
 const ImageWithText = ({ category }) => {
   const navigate = useNavigate();
-  const formattedName = category.category_name.replace(/ /g, "-").toLowerCase();
 
   const handleCardClick = () => {
-    navigate(`/category/${formattedName}`, {
-      state: { name: category.category_name, categoryId: category.category_id },
-    });
+    navigate(
+      `/grid/categories/${category.category_name}/${category.category_id}`
+    );
   };
   return (
     <div className="relative group">
