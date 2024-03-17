@@ -5,41 +5,69 @@ import AfterpayLogo from "../components/afterPayLogo";
 import CustomAccordion from "../components/customAccordion";
 import Slider from "../components/imageSlider";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
+import axios from "axios";
+import parse from "html-react-parser";
 
 const ProductDetails = () => {
+  const { id } = useParams();
   const location = useLocation();
-  const product = location.state?.productData;
+  const [product, setProduct] = useState(location.state?.productData);
+  const [variants, setVariants] = useState();
   const [isFavorited, setIsFavorited] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleFavorite = (event) => {
     setIsFavorited(!isFavorited);
   };
 
   useEffect(() => {
-    const div1 = document.querySelector(".div1");
-    const div2 = document.querySelector(".div2");
-
-    const setEqualHeight = () => {
-      const height1 = div1.offsetHeight;
-      const height2 = div2.offsetHeight;
-
-      if (height1 < height2) {
-        div2.style.height = height1 + "px";
-      } else {
-        div1.style.height = height2 + "px";
+    const fetchProductById = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/products/variants/${id}`
+        );
+        if (response.data) {
+          setProduct(response.data.product);
+          setVariants(response.data.variants);
+        }
+        if (response.status === 404) {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("Failed to fetch products", error);
       }
-      console.log(height1);
-      console.log(height2);
+    };
+    if (!product) {
+      fetchProductById();
+    } else {
+      setIsLoading(false);
+    }
+    const setEqualHeight = () => {
+      const div1 = document.querySelector(".div1");
+      const div2 = document.querySelector(".div2");
+
+      if (div1 && div2) {
+        // Check if both elements exist
+        const height1 = div1.offsetHeight;
+        const height2 = div2.offsetHeight;
+
+        if (height1 < height2) {
+          div2.style.height = `${height1}px`;
+        } else {
+          div1.style.height = `${height2}px`;
+        }
+      }
     };
 
-    setEqualHeight();
-    window.addEventListener("resize", setEqualHeight);
-
+    if (product) {
+      setEqualHeight();
+      window.addEventListener("resize", setEqualHeight);
+    }
     return () => {
       window.removeEventListener("resize", setEqualHeight);
     };
-  }, []);
+  }, [id, product]);
 
   const ratings = [4, 5, 3, 4, 5];
   if (!ratings || !Array.isArray(ratings) || ratings.length === 0) {
@@ -99,19 +127,26 @@ const ProductDetails = () => {
             </Link>
           </p>
           <br />
-          <p>{product.description}</p>
+          <p>{parse(product.description)}</p>
           <br />
           <div>
-            <h6>COLOUR</h6>
+            <h6>COLOR</h6>
 
             <div className="flex flex-row gap-2 small-size py-2">
-              <img
-                loading="lazy"
-                src={product.color_tile_image}
-                alt="colour-swatch-image"
-                width={"30px"}
-                height={"30px"}
-              ></img>
+              {variants &&
+                variants.map((variant, index) => (
+                  <Link
+                    to={`/product-details/${variant.product_name}/${variant.product_id}`}
+                  >
+                    <img
+                      loading="lazy"
+                      src={variant.color_tile_image}
+                      alt="color-tile"
+                      width={"30px"}
+                      height={"30px"}
+                    ></img>
+                  </Link>
+                ))}
             </div>
           </div>
 
@@ -194,23 +229,11 @@ const ProductDetails = () => {
           </div>
           <CustomAccordion
             heading={<p>PRODUCT DETAILS</p>}
-            content={
-              <ul className="mx-4">
-                {product.product_details.split("\n").map((detail, index) => (
-                  <li key={index}>{detail}</li>
-                ))}
-              </ul>
-            }
+            content={product.product_details}
           />
           <CustomAccordion
             heading={<p>SIZE & FIT</p>}
-            content={
-              <ul className="mx-4">
-                {product.size_and_fit.split("\n").map((detail, index) => (
-                  <li key={index}>{detail}</li>
-                ))}
-              </ul>
-            }
+            content={product.size_and_fit}
           />
 
           <CustomAccordion
