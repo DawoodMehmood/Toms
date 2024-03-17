@@ -1,25 +1,73 @@
-const connectDB = require("./src/config/dbConnection");
-const colors = require("colors");
-const express = require("express");
-const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const { setupAssociations } = require("./src/models/association‏Model");
-const { sequelize } = require("./src/config/dbConfig");
+import express from "express";
+import colors from "colors";
+import bodyParser from "body-parser";
+import dotenv from "dotenv";
+import cors from "cors";
+import { setupAssociations } from "./src/models/association‏Model.js";
+import { sequelize } from "./src/config/dbConfig.js";
+import AdminJS from "adminjs";
+import AdminJSExpress from "@adminjs/express";
+import AdminJSSequelize from "@adminjs/sequelize";
 
-const productRoutes = require("./src/routes/productRoutes");
-const categoryRoutes = require("./src/routes/categoryRoutes");
-const subcategoryRoutes = require("./src/routes/subcategoryRoutes");
-const colorRoutes = require("./src/routes/colorRoutes");
-const faqsRoutes = require("./src/routes/faqsRoutes");
+import Product from "./src/models/productModel.js";
+import Category from "./src/models/categoryModel.js";
+import Subcategory from "./src/models/subcategoryModel.js";
+import Color from "./src/models/colorModel.js";
+import Faqs from "./src/models/faqsModel.js";
 
-// const middleware = require("./middleware/jwtMiddleware");
+import productRoutes from "./src/routes/productRoutes.js";
+import categoryRoutes from "./src/routes/categoryRoutes.js";
+import subcategoryRoutes from "./src/routes/subcategoryRoutes.js";
+import colorRoutes from "./src/routes/colorRoutes.js";
+import faqsRoutes from "./src/routes/faqsRoutes.js";
+import measurementRoutes from "./src/routes/measurementRoutes.js";
+
+import ProductAdminConfig from "./admin/adminjsConfigs/product.js";
+import CategoryAdminConfig from "./admin/adminjsConfigs/category.js";
+import SubcategoryAdminConfig from "./admin/adminjsConfigs/subcategory.js";
+import Measurement from "./src/models/measurementModel.js";
+
+import { componentLoader } from "./admin/components/components.js";
+
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 
+//register sequelize adapter for adminjs
+AdminJS.registerAdapter(AdminJSSequelize);
+
+// Set up AdminJS
+const adminJs = new AdminJS({
+  databases: [sequelize], // Use your sequelize instance
+  rootPath: "/admin",
+  resources: [
+    ProductAdminConfig,
+    CategoryAdminConfig,
+    SubcategoryAdminConfig,
+    Color,
+    Faqs,
+    Measurement,
+  ],
+  branding: {
+    companyName: "Femina Dubai",
+  },
+  componentLoader,
+});
+adminJs.watch();
+// Build and use the AdminJS router
+const adminRouter = AdminJSExpress.buildAuthenticatedRouter(adminJs, {
+  authenticate: async (email, password) => {
+    // Implement your authentication mechanism here
+    // This is a placeholder; you should replace it with your actual auth logic
+    return email === "admin@example.com" && password === "123";
+  },
+  cookiePassword: "some-secret-password-used-to-secure-cookie",
+});
+
 const app = express();
 app.use(express.json());
+
+app.use(adminJs.options.rootPath, adminRouter);
 
 const allowedOrigins = ["https://<>.com", "http://localhost:3000"];
 
@@ -48,8 +96,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/subcategories", subcategoryRoutes);
 app.use("/api/colors", colorRoutes);
 app.use("/api/faqs", faqsRoutes);
-// app.use("/api/credential", middleware, credentialRoutes);
-// app.use("/auth/admin", adminRoutes);
+app.use("/api/measurements", measurementRoutes);
 // app.post("/api/token/validate", middleware, (req, res) => {
 //   // If the middleware passes, the token is valid
 //   res.status(200).json({ valid: true });
@@ -61,7 +108,6 @@ sequelize
     setupAssociations();
     console.log(`Database synced and associations set up!`.bgMagenta.white);
 
-    // Listen to port after successful database sync
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`.bgCyan.white);
     });
