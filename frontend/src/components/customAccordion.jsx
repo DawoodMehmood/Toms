@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
+import parse from "html-react-parser";
 
 const CustomAccordion = ({ heading, content, isOpen }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -7,7 +8,7 @@ const CustomAccordion = ({ heading, content, isOpen }) => {
   useEffect(() => {
     setIsExpanded(isOpen);
   }, [isOpen]);
-
+  const parsedContent = typeof content === "string" ? parse(content) : "";
   return (
     <div>
       <div className="w-full">
@@ -25,7 +26,7 @@ const CustomAccordion = ({ heading, content, isOpen }) => {
           style={{ maxHeight: isExpanded ? "1000px" : "0px" }}
         >
           <div className="pr-4 py-2 text-base text-gray-500 selection:bg-yellow">
-            {content}
+            {parsedContent}
           </div>
         </div>
       </div>
