@@ -17,17 +17,14 @@ const FAQS = () => {
 
   return (
     <>
-      <div className="flex flex-col mx-20">
+      <div className="flex flex-col mx-20 my-10">
         <h1 className="bigText">FAQS</h1>
         <section>
           {faqs.map((faq) => (
             <CustomAccordion
               key={faq.faq_id}
               heading={<p>{faq.faq_name}</p>}
-              content={
-                <ReactMarkdown>{faq.faq_description}</ReactMarkdown>
-
-              }
+              content={faq.faq_description}
             />
           ))}
         </section>
