@@ -11,44 +11,44 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Cart from "./cart";
 
-const CategoryItem = ({ category }) => {
+const DropdownMenu = ({ children }) => {
+  return (
+    <div className="absolute left-0 bg-white shadow-lg mt-1 py-2 w-48 z-10">
+      {children}
+    </div>
+  );
+};
+
+const CategoryItem = ({ category, isNavbarItem = false }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
     <div
-      className="relative group"
+      className="relative"
+      onMouseEnter={() => setIsDropdownOpen(true)}
       onMouseLeave={() => setIsDropdownOpen(false)}
     >
-      <div
-        onMouseEnter={() => setIsDropdownOpen(true)}
-        className="cursor-pointer hover:bg-gray-100 py-2 px-4"
-      >
+      <div className="cursor-pointer hover:bg-gray-100 py-2 px-4 flex justify-between items-center">
         {category.name}
       </div>
-      {isDropdownOpen && (
-        <div
-          className="absolute left-0 bg-white shadow-lg mt-1 py-2 z-10"
-          onMouseEnter={() => setIsDropdownOpen(true)}
-        >
-          {category.children.length > 0 &&
-            category.children.map((subCat) => (
-              <div
-                key={subCat.category_id}
-                className="px-4 py-2 hover:bg-gray-100"
-              >
-                <div className="font-bold">{subCat.name}</div>
-                {/* Render third level categories if any */}
-                {subCat.children.map((subSubCat) => (
+      {isNavbarItem && isDropdownOpen && (
+        <DropdownMenu>
+          {category.children.map((child) => (
+            <div key={child.category_id} className="px-4 py-2 hover:bg-gray-50">
+              <div className="font-bold">{child.name}</div>
+              <div className="pl-4">
+                {child.children.map((subChild) => (
                   <div
-                    key={subSubCat.category_id}
-                    className="pl-4 py-1 hover:bg-gray-200"
+                    key={subChild.category_id}
+                    className="py-1 hover:bg-gray-100"
                   >
-                    {subSubCat.name}
+                    {subChild.name}
                   </div>
                 ))}
               </div>
-            ))}
-        </div>
+            </div>
+          ))}
+        </DropdownMenu>
       )}
     </div>
   );
@@ -129,11 +129,19 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="hidden lg:flex py-5 px-7 items-end justify-center gap-20">
-            {categories.map((category) => (
-              <CategoryItem key={category.category_id} category={category} />
-            ))}
-          </div>
+          <nav className="bg-white shadow-md">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="lg:flex py-5 px-7 items-end justify-center gap-10">
+                {categories.map((category) => (
+                  <CategoryItem
+                    key={category.category_id}
+                    category={category}
+                    isNavbarItem={true}
+                  />
+                ))}
+              </div>
+            </div>
+          </nav>
         </div>
       </nav>
     </section>
