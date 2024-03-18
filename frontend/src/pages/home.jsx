@@ -57,7 +57,7 @@ const Home = () => {
         </div>
       </section>
       <CanvasImage imageUrl={canvasImage2} path={"/shop"} />
-      <Gallery items={categories} />
+      {/* <Gallery items={categories} /> */}
       <ShapeCarousel />
     </div>
   );
