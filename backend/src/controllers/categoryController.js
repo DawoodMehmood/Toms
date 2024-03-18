@@ -1,9 +1,39 @@
 import Category from "../models/categoryModel.js";
-import Product from "../models/productModel.js";
-import Subcategory from "../models/subcategoryModel.js";
+// import Product from "../models/productModel.js";
+
+async function buildCategoryHierarchy() {
+  const categories = await Category.findAll({
+    where: {
+      is_active: true,
+    },
+  });
+
+  // Map to store categories by their ID for quick access
+  const categoriesMap = new Map(
+    categories.map((cat) => [
+      cat.category_id,
+      { ...cat.toJSON(), children: [] },
+    ])
+  );
+
+  // Root categories are those without a parent_id
+  let rootCategories = [];
+
+  categories.forEach((cat) => {
+    if (cat.parent_id) {
+      const parent = categoriesMap.get(cat.parent_id);
+      if (parent) {
+        parent.children.push(categoriesMap.get(cat.category_id));
+      }
+    } else {
+      rootCategories.push(categoriesMap.get(cat.category_id));
+    }
+  });
+
+  return rootCategories;
+}
 
 const categoryController = {
-  // Create a new category
   createCategory: async (req, res) => {
     try {
       const category = await Category.create(req.body);
@@ -13,17 +43,19 @@ const categoryController = {
     }
   },
 
-  // Get all categories
   getAllCategories: async (req, res) => {
     try {
-      const categories = await Category.findAll();
+      const categories = await Category.findAll({
+        where: {
+          is_active: true,
+        },
+      });
       res.status(200).send(categories);
     } catch (error) {
       res.status(400).send(error);
     }
   },
 
-  // Get a single category by id
   getCategoryById: async (req, res) => {
     try {
       const category = await Category.findByPk(req.params.id);
@@ -37,7 +69,6 @@ const categoryController = {
     }
   },
 
-  // Update a category
   updateCategory: async (req, res) => {
     try {
       const updateResult = await Category.update(req.body, {
@@ -53,7 +84,6 @@ const categoryController = {
     }
   },
 
-  // Delete a category
   deleteCategory: async (req, res) => {
     try {
       const deleteResult = await Category.destroy({
@@ -68,53 +98,30 @@ const categoryController = {
       res.status(400).send(error);
     }
   },
-  getProductsByCategoryId: async (req, res) => {
-    try {
-      const categoryId = req.params.categoryId;
-      const products = await Product.findAll({
-        where: {
-          "$Subcategory.Category.category_id$": categoryId, // Use the '$' syntax to filter on nested model properties
-          is_active: true, // Ensure only active products are fetched
-        },
-        include: [
-          {
-            model: Subcategory,
-            required: true, // This makes it an INNER JOIN
-            include: [
-              {
-                model: Category,
-                where: { category_id: categoryId }, // Ensure this matches your column name in the Category model
-                required: true, // This makes it an INNER JOIN
-              },
-            ],
-          },
-        ],
-      });
-      res.json(products);
-    } catch (error) {
-      res
-        .status(500)
-        .send({ message: "Error fetching products by category", error });
-    }
-  },
+  // getProductsByCategoryId: async (req, res) => {
+  //   try {
+  //     const categoryId = req.params.categoryId;
+  //     const products = await Product.findAll({
+  //       where: {
+  //         category_id: categoryId,
+  //         is_active: true,
+  //       },
+  //     });
+  //     res.json(products);
+  //   } catch (error) {
+  //     res
+  //       .status(500)
+  //       .send({ message: "Error fetching products by category", error });
+  //   }
+  // },
 
-  getSubcategoriesByCategoryId: async (req, res) => {
+  getCategoryHierarchy: async (req, res) => {
     try {
-      const categoryId = req.params.categoryId;
-      const subcategories = await Subcategory.findAll({
-        where: { category_id: categoryId },
-      });
-
-      if (subcategories) {
-        res.json(subcategories);
-      } else {
-        res.status(404).send({
-          message: "Subcategories not found for the provided category ID",
-        });
-      }
+      const hierarchy = await buildCategoryHierarchy();
+      res.json(hierarchy);
     } catch (error) {
-      console.error("Error fetching subcategories:", error);
-      res.status(500).send({ message: "Error fetching subcategories", error });
+      console.error("Error fetching categories", error);
+      res.status(500).json({ message: "Error fetching categories", error });
     }
   },
 };
