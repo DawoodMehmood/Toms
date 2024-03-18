@@ -9,26 +9,38 @@ const CategoryAdminConfig = {
       },
     },
     sort: {
-      sortBy: "createdAt",
+      sortBy: "category_id",
       direction: "desc",
     },
-    listProperties: ["category_id", "category_name", "is_active"],
+    listProperties: [
+      "category_id",
+      "name",
+      "is_active",
+      "parent_id",
+      "Sorting",
+    ],
     // editProperties: [
     //   "product_name",
     // ],
-    filterProperties: ["category_id", "category_name", "is_active"],
+    filterProperties: [
+      "category_id",
+      "name",
+      "is_active",
+      "parent_id",
+      "Sorting",
+    ],
     properties: {
       category_id: {
         isVisible: { list: true, filter: true, show: true, edit: false },
         position: 100,
       },
-      category_name: {
+      name: {
         isTitle: true,
         position: 200,
       },
       is_active: {
         // isVisible: { list: true, filter: true, show: true, edit: false },
-        position: 300,
+        position: 50,
       },
     },
   },
