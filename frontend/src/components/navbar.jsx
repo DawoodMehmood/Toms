@@ -13,7 +13,7 @@ import Cart from "./cart";
 
 const DropdownMenu = ({ children }) => {
   return (
-    <div className="absolute left-0 bg-white shadow-lg mt-1 py-2 w-48 z-10">
+    <div className="flex flex-row gap-12 absolute left-0 right-0 border-gray border-b shadow-sm bg-white px-12 z-10">
       {children}
     </div>
   );
@@ -24,29 +24,29 @@ const CategoryItem = ({ category, isNavbarItem = false }) => {
 
   return (
     <div
-      className="relative"
       onMouseEnter={() => setIsDropdownOpen(true)}
       onMouseLeave={() => setIsDropdownOpen(false)}
     >
-      <div className="cursor-pointer hover:bg-gray-100 py-2 px-4 flex justify-between items-center">
-        {category.name}
-      </div>
-      {isNavbarItem && isDropdownOpen && (
+      <div className="cursor-pointer text-gray-800 p-4 ">{category.name}</div>
+
+      {isNavbarItem && category.children && isDropdownOpen && (
         <DropdownMenu>
           {category.children.map((child) => (
-            <div key={child.category_id} className="px-4 py-2 hover:bg-gray-50">
-              <div className="font-bold">{child.name}</div>
-              <div className="pl-4">
-                {child.children.map((subChild) => (
-                  <div
-                    key={subChild.category_id}
-                    className="py-1 hover:bg-gray-100"
-                  >
-                    {subChild.name}
-                  </div>
-                ))}
+            <>
+              <div key={child.category_id} className="px-4 py-5">
+                <div className="font-bold mb-2">{child.name}</div>
+                <div className="">
+                  {child.children.map((subChild) => (
+                    <div
+                      key={subChild.category_id}
+                      className="py-1 hover:underline"
+                    >
+                      {subChild.name}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            </>
           ))}
         </DropdownMenu>
       )}
@@ -92,7 +92,7 @@ const Navbar = () => {
     <section>
       <Banner />
       <nav className="bg-white shadow-md ">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className="grid grid-cols-3 py-4">
             <div className="flex items-center gap-4 cursor-pointer ">
               <div className="lg:hidden" onClick={toggleMenu}>
@@ -129,9 +129,9 @@ const Navbar = () => {
             </div>
           </div>
 
-          <nav className="bg-white shadow-md">
+          <nav className="bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="lg:flex py-5 px-7 items-end justify-center gap-10">
+              <div className="lg:flex px-7 items-end justify-center gap-10">
                 {categories.map((category) => (
                   <CategoryItem
                     key={category.category_id}
