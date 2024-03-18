@@ -4,7 +4,7 @@ import React from "react";
 const Contact = () => {
   return (
     <>
-      <div className="mx-44 my-12">
+      <div className=" mx-5 md:mx-44 my-12">
         <h1 className=" bigText">GET IN TOUCH</h1>
         <br />
         <p className="font-bold">
