@@ -10,20 +10,41 @@ Category.init(
       autoIncrement: true,
       allowNull: false,
     },
-    category_name: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    image_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     is_active: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      allowNull: false,
+      defaultValue: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    parent_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "categories",
+        key: "category_id",
+      },
+    },
+    sorting: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
   },
   {
     sequelize,
     modelName: "Category",
     tableName: "categories",
-    timestamps: true,
+    timestamps: false,
   }
 );
 
