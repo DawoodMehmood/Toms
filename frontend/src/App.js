@@ -18,6 +18,7 @@ import Returns from "./pages/returns";
 import ShippingAndDelivery from "./pages/shipping&delivery";
 import Checkout from "./pages/checkout";
 import CommonGrid from "./pages/commonGrid";
+import Payment from "./components/payment";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="pages/checkout" element={<Checkout />}></Route>
+          <Route path="checkout/payment" element={<Payment />}></Route>
           <Route
             path="/pages/shipping-delivery"
             element={<ShippingAndDelivery />}
