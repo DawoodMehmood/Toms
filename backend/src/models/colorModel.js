@@ -10,17 +10,26 @@ Color.init(
       autoIncrement: true,
       allowNull: false,
     },
-    color_name: {
-      type: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
-    hex_code: DataTypes.STRING,
+    hex_code: {
+      type: DataTypes.STRING(6),
+      allowNull: true,
+    },
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     sequelize,
     modelName: "Color",
-    tableName: "colors",
+    tableName: "color",
     timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   }
 );
 
