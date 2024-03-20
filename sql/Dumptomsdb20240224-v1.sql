@@ -38,7 +38,7 @@ CREATE TABLE
     `name` varchar(255) NOT NULL,
     `logo_url` varchar(255) DEFAULT NULL,
     `website_url` varchar(255) DEFAULT NULL,
-    `active` tinyint (1) NOT NULL DEFAULT '1',
+    `is_active` tinyint (1) NOT NULL DEFAULT '0',
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`brand_id`)
@@ -83,7 +83,7 @@ CREATE TABLE
     `color_id` int NOT NULL AUTO_INCREMENT,
     `name` varchar(50) NOT NULL,
     `hex_code` varchar(6) DEFAULT NULL,
-    `active` tinyint (1) NOT NULL DEFAULT '1',
+    `is_active` tinyint (1) NOT NULL DEFAULT '0',
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`color_id`)
@@ -515,7 +515,7 @@ DROP TABLE IF EXISTS `products`;
 CREATE TABLE
   `products` (
     `product_id` int NOT NULL AUTO_INCREMENT,
-    `product_name` varchar(255) DEFAULT NULL,
+    `product_name` varchar(255) NOT NULL,
     `description` text,
     `price` decimal(10, 2) DEFAULT NULL,
     `category_id` int DEFAULT NULL,
@@ -523,11 +523,15 @@ CREATE TABLE
     `is_on_sale` tinyint (1) DEFAULT '0',
     `is_active` tinyint (1) NOT NULL DEFAULT '0',
     `discount_price` decimal(10, 2) DEFAULT NULL,
+    `discount_percentage` decimal(10, 2) DEFAULT NULL,
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `image_url` varchar(255) NOT NULL,
+    `image_urls` json NOT NULL,
     `is_tailorable` tinyint (1) NOT NULL,
     `type` enum ('Ready-made', 'Custom-made') NOT NULL,
+    `product_details` text DEFAULT NULL,
+    `size_and_fit` text DEFAULT NULL,
+    `color_tile_image` text DEFAULT NULL,
     `brand_id` int DEFAULT NULL,
     `size_id` int DEFAULT NULL,
     `color_id` int DEFAULT NULL,
@@ -605,7 +609,7 @@ CREATE TABLE
   `sizes` (
     `size_id` int NOT NULL AUTO_INCREMENT,
     `name` varchar(50) NOT NULL,
-    `active` tinyint (1) NOT NULL DEFAULT '1',
+    `is_active` tinyint (1) NOT NULL DEFAULT '0',
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`size_id`)
@@ -673,7 +677,7 @@ CREATE TABLE
     `tailor_id` int NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     `mobile` varchar(20) NOT NULL,
-    `availability_status` tinyint (1) NOT NULL DEFAULT '1',
+    `availability_status` tinyint (1) NOT NULL DEFAULT '0',
     `skillsets` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`tailor_id`)
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
