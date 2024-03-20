@@ -1,28 +1,55 @@
-// import Product from "./productModel.js";
-// import Category from "./categoryModel.js";
-// import Color from "./colorModel.js";
-// import Measurement from "./measurementModel.js";
+import Product from "./productModel.js";
+import Category from "./categoryModel.js";
+import Color from "./colorModel.js";
+import Measurement from "./measurementModel.js";
+import Brand from "./brandModel.js";
+import Size from "./sizeModel.js";
+import Order from "./orderModel.js";
+import Customer from "./customerModel.js";
+import OrderStatus from "./orderStatusModel.js";
 
-// export const setupAssociations = () => {
-//   Category.hasMany(Product, {
-//     foreignKey: "category_id",
-//     onDelete: "CASCADE",
-//   });
-//   Product.belongsTo(Category, {
-//     foreignKey: "category_id",
-//   });
+export const setupAssociations = () => {
+  Category.hasMany(Product, {
+    foreignKey: "category_id",
+    onDelete: "CASCADE",
+  });
+  Product.belongsTo(Category, {
+    foreignKey: "category_id",
+  });
 
-//   Color.belongsToMany(Product, {
-//     through: "product_colors",
-//     foreignKey: "color_id",
-//     onDelete: "CASCADE",
-//   });
-//   Product.belongsToMany(Color, {
-//     through: "product_colors",
-//     foreignKey: "product_id",
-//     onDelete: "CASCADE",
-//   });
+  Brand.hasMany(Product, { foreignKey: "brand_id" });
+  Product.belongsTo(Brand, { foreignKey: "brand_id" });
 
-//   Product.belongsToMany(Measurement, { through: "ProductMeasurements" });
-//   Measurement.belongsToMany(Product, { through: "ProductMeasurements" });
-// };
+  //   Color.hasMany(Product, { foreignKey: "color_id" });
+  //   Product.belongsTo(Color, { foreignKey: "color_id" });
+
+  Product.belongsToMany(Color, {
+    through: "product_colors",
+    foreignKey: "product_id",
+  });
+  Color.belongsToMany(Product, {
+    through: "product_colors",
+    foreignKey: "color_id",
+  });
+
+  //   Product.belongsTo(Size, { foreignKey: "size_id" });
+  //   Size.hasMany(Product, { foreignKey: "size_id" });
+
+  Product.belongsToMany(Size, {
+    through: "product_sizes",
+    foreignKey: "product_id",
+  });
+  Size.belongsToMany(Product, {
+    through: "product_sizes",
+    foreignKey: "size_id",
+  });
+
+  //   Product.belongsToMany(Measurement, { through: "ProductMeasurements" });
+  //   Measurement.belongsToMany(Product, { through: "ProductMeasurements" });
+
+  Order.belongsTo(Customer, { foreignKey: "customer_id" });
+  Customer.hasMany(Order, { foreignKey: "customer_id" });
+
+  Order.belongsTo(OrderStatus, { foreignKey: "order_status_id" });
+  OrderStatus.hasMany(Order, { foreignKey: "order_status_id" });
+};
