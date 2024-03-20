@@ -3,18 +3,18 @@ import colors from "colors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
-// import { setupAssociations } from "./src/models/association‏Model.js";
+import { setupAssociations } from "./src/models/association‏Model.js";
 import { sequelize } from "./src/config/dbConfig.js";
 import AdminJS from "adminjs";
 import AdminJSExpress from "@adminjs/express";
 import AdminJSSequelize from "@adminjs/sequelize";
 
-// import Product from "./src/models/productModel.js";
+import Product from "./src/models/productModel.js";
 import Category from "./src/models/categoryModel.js";
 import Color from "./src/models/colorModel.js";
 import Faqs from "./src/models/faqsModel.js";
 
-// import productRoutes from "./src/routes/productRoutes.js";
+import productRoutes from "./src/routes/productRoutes.js";
 import categoryRoutes from "./src/routes/categoryRoutes.js";
 import colorRoutes from "./src/routes/colorRoutes.js";
 import faqsRoutes from "./src/routes/faqsRoutes.js";
@@ -39,6 +39,7 @@ const adminJs = new AdminJS({
   rootPath: "/admin",
   resources: [
     // ProductAdminConfig,
+    Product,
     CategoryAdminConfig,
     Color,
     Faqs,
@@ -87,7 +88,7 @@ app.use(cors());
 // app.use(express.json());
 
 // routes
-// app.use("/api/products", productRoutes);
+app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/colors", colorRoutes);
 app.use("/api/faqs", faqsRoutes);
@@ -100,7 +101,7 @@ app.use("/api/measurements", measurementRoutes);
 sequelize
   .sync({ force: false }) // `force: true` will drop existing tables
   .then(() => {
-    // setupAssociations();
+    setupAssociations();
     console.log(`Database synced and associations set up!`.bgMagenta.white);
 
     app.listen(PORT, () => {
