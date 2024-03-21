@@ -121,7 +121,9 @@ const Navbar = () => {
                 <span className="text-sm small-size">SEARCH</span>
               </div>
               <HeartWithBadge count={15} />
-              <CiUser size={26} />
+              <Link to={"/login"}>
+                <CiUser size={26} />
+              </Link>
               <button onClick={toggleCart}>
                 <CartWithBadge count={1} />
               </button>
