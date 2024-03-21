@@ -19,12 +19,17 @@ import ShippingAndDelivery from "./pages/shipping&delivery";
 import Checkout from "./pages/checkout";
 import CommonGrid from "./pages/commonGrid";
 import Payment from "./components/payment";
+import ProtectedRoute from "./components/protectedRoute";
 
 function App() {
   return (
     <div className="App max-w-[1440px] mx-auto">
       <Routes>
         <Route element={<UserLayout />}>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/register" element={<Register />} />
+          </Route>
+
           <Route
             path="/product-details/:id"
             element={<ProductDetails />}
@@ -41,7 +46,6 @@ function App() {
           <Route path="/pages/size-chart" element={<SizeChart />}></Route>
           <Route path="/pages/returns" element={<Returns />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
           <Route path="pages/checkout" element={<Checkout />}></Route>
           <Route path="checkout/payment" element={<Payment />}></Route>
           <Route
