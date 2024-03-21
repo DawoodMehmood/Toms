@@ -17,7 +17,7 @@
     "@adminjs/sequelize": "^4.1.1",
     "adminjs": "^7.7.3",
     "axios": "^1.6.8",
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.1.1",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
