@@ -131,7 +131,7 @@ CREATE TABLE
     `address` varchar(255) DEFAULT NULL,
     `contact_details` varchar(100) DEFAULT NULL,
     `email` varchar(100) NOT NULL,
-    `password` varchar(100) NOT NULL,
+    `password` varchar(255) NOT NULL,
     `is_active` tinyint (1) NOT NULL DEFAULT '0',
     `registration_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`customer_id`),
