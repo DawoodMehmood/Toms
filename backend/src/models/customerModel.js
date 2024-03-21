@@ -1,5 +1,12 @@
 import { sequelize, DataTypes, Model } from "../config/dbConfig.js";
+import bcrypt from "bcrypt";
 
+const hashPassword = async (user) => {
+  if (user.changed("password")) {
+    const salt = await bcrypt.genSalt(10); // Salt rounds
+    user.password = await bcrypt.hash(user.password, salt);
+  }
+};
 class Customer extends Model {}
 
 Customer.init(
@@ -27,7 +34,7 @@ Customer.init(
       unique: true,
     },
     password: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     is_active: {
@@ -44,6 +51,10 @@ Customer.init(
     modelName: "Customer",
     tableName: "customers",
     timestamps: false,
+    hooks: {
+      beforeCreate: hashPassword,
+      beforeUpdate: hashPassword,
+    },
   }
 );
 
