@@ -19,6 +19,7 @@ import categoryRoutes from "./src/routes/categoryRoutes.js";
 import colorRoutes from "./src/routes/colorRoutes.js";
 import faqsRoutes from "./src/routes/faqsRoutes.js";
 import measurementRoutes from "./src/routes/measurementRoutes.js";
+import authRoutes from "./src/routes/authRoutes.js";
 
 // import ProductAdminConfig from "./admin/adminjsConfigs/product.js";
 import CategoryAdminConfig from "./admin/adminjsConfigs/category.js";
@@ -93,6 +94,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/colors", colorRoutes);
 app.use("/api/faqs", faqsRoutes);
 app.use("/api/measurements", measurementRoutes);
+app.use("/api/auth", authRoutes);
 // app.post("/api/token/validate", middleware, (req, res) => {
 //   // If the middleware passes, the token is valid
 //   res.status(200).json({ valid: true });
