@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAuthStore from "../store/authStore";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
+  const location = useLocation();
+  const message = location.state?.message || ""; // Using optional chaining and fallback to an empty string
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,6 +32,9 @@ const Login = () => {
           <div className="text-center mb-3">
             <h1 className="bigText">LOGIN</h1>
           </div>
+          {message && (
+            <div className="mb-3 text-center text-green-600">{message}</div>
+          )}
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <input
@@ -54,9 +59,12 @@ const Login = () => {
               />
             </div>
             <div className="mb-3">
-              <a href="#" className="text-gray-400 small-size hover:underline">
-                Forgot Your Password?
-              </a>
+              <Link
+                to="/forget-password"
+                className="text-gray-400 small-size hover:underline"
+              >
+                FORGET YOUR PASSWORD?
+              </Link>
             </div>
             <div className="text-center">
               <button
