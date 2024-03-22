@@ -24,6 +24,8 @@ import ResetPassword from "./pages/resetPassword";
 import ForgetPassword from "./pages/forgetPassword";
 import MyAccount from "./pages/myAccount";
 import Addresses from "./pages/addresses";
+import Wishlist from "./pages/wishlist";
+import About from "./pages/about";
 
 function App() {
   return (
@@ -60,6 +62,8 @@ function App() {
           <Route path="/forget-password" element={<ForgetPassword />}></Route>
           <Route path="pages/checkout" element={<Checkout />}></Route>
           <Route path="checkout/payment" element={<Payment />}></Route>
+          <Route path="pages/wishlist" element={<Wishlist />}></Route>
+          <Route path="pages/about" element={<About />}></Route>
           <Route
             path="/pages/shipping-delivery"
             element={<ShippingAndDelivery />}
