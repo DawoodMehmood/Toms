@@ -20,6 +20,10 @@ import Checkout from "./pages/checkout";
 import CommonGrid from "./pages/commonGrid";
 import Payment from "./components/payment";
 import ProtectedRoute from "./components/protectedRoute";
+import ResetPassword from "./pages/resetPassword";
+import ForgetPassword from "./pages/forgetPassword";
+import MyAccount from "./pages/myAccount";
+import Addresses from "./pages/addresses";
 
 function App() {
   return (
@@ -40,12 +44,20 @@ function App() {
           ></Route>
 
           <Route path="/pages/faqs" element={<FAQS />}></Route>
-          <Route path="/grid/:type/:name/:id" element={<CommonGrid />}></Route>
+          <Route
+            path="/grid/:type/:name/:id
+          "
+            element={<CommonGrid />}
+          ></Route>
           <Route path="/pages/careers" element={<Careers />}></Route>
           <Route path="/pages/contact" element={<Contact />}></Route>
           <Route path="/pages/size-chart" element={<SizeChart />}></Route>
           <Route path="/pages/returns" element={<Returns />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/addresses" element={<Addresses />}></Route>
+          <Route path="/my-account" element={<MyAccount />}></Route>
+          <Route path="/reset-password" element={<ResetPassword />}></Route>
+          <Route path="/forget-password" element={<ForgetPassword />}></Route>
           <Route path="pages/checkout" element={<Checkout />}></Route>
           <Route path="checkout/payment" element={<Payment />}></Route>
           <Route
