@@ -17,6 +17,14 @@ export const setupAssociations = () => {
     foreignKey: "category_id",
   });
 
+  // After defining the Category class and initializing it
+  Category.hasMany(Category, {
+    as: "children",
+    foreignKey: "parent_id",
+    useJunctionTable: false,
+  });
+  Category.belongsTo(Category, { as: "parent", foreignKey: "parent_id" });
+
   Brand.hasMany(Product, { foreignKey: "brand_id" });
   Product.belongsTo(Brand, { foreignKey: "brand_id" });
 
