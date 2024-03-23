@@ -98,22 +98,6 @@ const categoryController = {
       res.status(400).send(error);
     }
   },
-  // getProductsByCategoryId: async (req, res) => {
-  //   try {
-  //     const categoryId = req.params.categoryId;
-  //     const products = await Product.findAll({
-  //       where: {
-  //         category_id: categoryId,
-  //         is_active: true,
-  //       },
-  //     });
-  //     res.json(products);
-  //   } catch (error) {
-  //     res
-  //       .status(500)
-  //       .send({ message: "Error fetching products by category", error });
-  //   }
-  // },
 
   getCategoryHierarchy: async (req, res) => {
     try {
@@ -122,6 +106,36 @@ const categoryController = {
     } catch (error) {
       console.error("Error fetching categories", error);
       res.status(500).json({ message: "Error fetching categories", error });
+    }
+  },
+
+  getSecondTierCategories: async (req, res) => {
+    try {
+      const topLevelCategories = await Category.findAll({
+        where: { parent_id: null, is_active: true },
+        include: [
+          {
+            model: Category,
+            as: "children",
+            required: true,
+            where: { is_active: true },
+            order: [["sorting", "ASC"]],
+            limit: 4,
+          },
+        ],
+        order: [["sorting", "ASC"]],
+      });
+
+      const secondTierCategories = topLevelCategories
+        .reduce((acc, cat) => [...acc, ...cat.children], [])
+        .slice(0, 4);
+
+      res.json(secondTierCategories);
+    } catch (error) {
+      console.error("Error fetching second-tier categories", error);
+      res
+        .status(500)
+        .json({ message: "Error fetching second-tier categories", error });
     }
   },
 };
