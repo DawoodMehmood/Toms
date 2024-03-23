@@ -6,9 +6,7 @@ const ImageWithText = ({ category }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(
-      `/grid/categories/${category.category_name}/${category.category_id}`
-    );
+    navigate(`/categories/${category.category_name}/${category.category_id}`);
   };
   return (
     <div className="relative group">
@@ -19,7 +17,7 @@ const ImageWithText = ({ category }) => {
         <img src={image1} alt="" />
         <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
           <p className="font-bold text-xl text-white group-hover:underline decoration-4 transition-all duration-300 ease-in-out">
-            {category.category_name.toUpperCase()}
+            {category?.name.toUpperCase()}
           </p>
         </div>
       </div>
