@@ -6,27 +6,36 @@ import CustomAccordion from "../components/customAccordion";
 import Slider from "../components/imageSlider";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { Link, useLocation, useParams } from "react-router-dom";
-import axios from "axios";
 import parse from "html-react-parser";
+import useFavoritesStore from "../store/favouritesStore";
+import { publicAPI } from "../utils/apiCalling";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const location = useLocation();
   const [product, setProduct] = useState(location.state?.productData);
   const [variants, setVariants] = useState();
-  const [isFavorited, setIsFavorited] = useState(false);
+  const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
+  const [isFavorited, setIsFavorited] = useState(
+    isFavorite(product.product_id)
+  );
   const [isLoading, setIsLoading] = useState(true);
 
-  const toggleFavorite = (event) => {
-    setIsFavorited(!isFavorited);
+  const toggleFavorite = () => {
+    const currentFavorited = !isFavorited;
+    setIsFavorited(currentFavorited);
+
+    if (currentFavorited) {
+      addFavorite(product.product_id);
+    } else {
+      removeFavorite(product.product_id);
+    }
   };
 
   useEffect(() => {
     const fetchProductById = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/products/variants/${id}`
-        );
+        const response = await publicAPI.get(`/products/variants/${id}`);
         if (response.data) {
           setProduct(response.data.product);
           setVariants(response.data.variants);
@@ -97,7 +106,7 @@ const ProductDetails = () => {
             <h4>{product.product_name.toUpperCase()}</h4>
             <button onClick={toggleFavorite}>
               {isFavorited ? (
-                <IoMdHeart size={25} />
+                <IoMdHeart size={25} color="orange" />
               ) : (
                 <IoMdHeartEmpty size={25} />
               )}
