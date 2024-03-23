@@ -13,6 +13,9 @@ import Product from "./src/models/productModel.js";
 import Category from "./src/models/categoryModel.js";
 import Color from "./src/models/colorModel.js";
 import Faqs from "./src/models/faqsModel.js";
+import Brand from "./src/models/brandModel.js";
+import Order from "./src/models/orderModel.js";
+import Customer from "./src/models/customerModel.js";
 
 import productRoutes from "./src/routes/productRoutes.js";
 import categoryRoutes from "./src/routes/categoryRoutes.js";
@@ -34,14 +37,51 @@ const PORT = process.env.PORT || 8000;
 //register sequelize adapter for adminjs
 AdminJS.registerAdapter(AdminJSSequelize);
 
+const brandOptions = {
+  properties: {
+    is_active: {
+      type: "boolean",
+      isVisible: { list: false, filter: true, show: true, edit: true },
+      // Attempt to set the default value (may not automatically check the box, see Step 2 for handling in the frontend)
+      defaultValue: true,
+    },
+    // Define other property options as needed
+  },
+  // Include other resource options as necessary
+};
+
 // Set up AdminJS
 const adminJs = new AdminJS({
   databases: [sequelize], // Use your sequelize instance
   rootPath: "/admin",
   resources: [
+    { resource: Brand, options: brandOptions },
     // ProductAdminConfig,
-    Product,
+    {
+      resource: Product,
+      options: {
+        parent: {
+          name: "Inventory",
+          icon: "List",
+        },
+      },
+    },
     CategoryAdminConfig,
+    {
+      resource: Order,
+      options: {
+        parent: "Inventory",
+      },
+    },
+    {
+      resource: Customer,
+      options: {
+        parent: {
+          name: "User Management",
+          icon: "User",
+        },
+      },
+    },
     Color,
     Faqs,
     Measurement,
@@ -53,14 +93,15 @@ const adminJs = new AdminJS({
 });
 adminJs.watch();
 // Build and use the AdminJS router
-const adminRouter = AdminJSExpress.buildAuthenticatedRouter(adminJs, {
-  authenticate: async (email, password) => {
-    // Implement your authentication mechanism here
-    // This is a placeholder; you should replace it with your actual auth logic
-    return email === "admin@example.com" && password === "123";
-  },
-  cookiePassword: "some-secret-password-used-to-secure-cookie",
-});
+// const adminRouter = AdminJSExpress.buildAuthenticatedRouter(adminJs, {
+//   authenticate: async (email, password) => {
+//     // Implement your authentication mechanism here
+//     // This is a placeholder; you should replace it with your actual auth logic
+//     return email === "admin@example.com" && password === "123";
+//   },
+//   cookiePassword: "some-secret-password-used-to-secure-cookie",
+// });
+const adminRouter = AdminJSExpress.buildRouter(adminJs);
 
 const app = express();
 app.use(express.json());
