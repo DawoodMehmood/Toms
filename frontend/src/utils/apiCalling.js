@@ -1,9 +1,8 @@
-// src/utils/api.js
+// src/utils/apiCalling.js
 import axios from "axios";
 import useAuthStore from "../store/cartStore";
 
 const baseURL = process.env.REACT_APP_API_URL;
-console.log(`Base URL: ${baseURL}`);
 
 // Instance for public requests
 export const publicAPI = axios.create({
