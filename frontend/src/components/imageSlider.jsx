@@ -36,6 +36,8 @@ const Slider = ({ title, productsData }) => {
     },
   };
 
+  const showNavigationButtons = productsData.length > 4;
+
   return (
     <section>
       <div className="mx-16 mt-16">
@@ -60,7 +62,7 @@ const Slider = ({ title, productsData }) => {
                 <SliderCard product={product} />
               </SwiperSlide>
             ))}
-            <SwiperNavButtons />
+            <SwiperNavButtons isDisabled={!showNavigationButtons} />
           </Swiper>
         </div>
       </div>
