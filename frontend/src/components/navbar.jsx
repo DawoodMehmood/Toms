@@ -7,9 +7,9 @@ import logo from "./../assets/img/logo.png";
 import Banner from "./announcementBanner";
 import HeartWithBadge from "./heartWithBadge";
 import CartWithBadge from "./cartWithBadge";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import Cart from "./cart";
+import { publicAPI } from "../utils/apiCalling";
 
 const DropdownMenu = ({ children }) => {
   return (
@@ -21,25 +21,53 @@ const DropdownMenu = ({ children }) => {
 
 const CategoryItem = ({ category, isNavbarItem = false }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
+  const handleCategoryClick = () => {
+    navigate(
+      `/categories/${category.name.replaceAll(" ", "-").toLowerCase()}/${
+        category.category_id
+      }`
+    );
+  };
+
+  // Handler for subcategory click
+  const handleSubcategoryClick = (subChild) => {
+    navigate(
+      `/categories/${subChild.name.replaceAll(" ", "-").toLowerCase()}/${
+        subChild.category_id
+      }`
+    );
+  };
   return (
     <div
       onMouseEnter={() => setIsDropdownOpen(true)}
       onMouseLeave={() => setIsDropdownOpen(false)}
     >
-      <div className="cursor-pointer text-gray-800 p-4 ">{category.name}</div>
+      <div
+        onClick={handleCategoryClick}
+        className="cursor-pointer hover:underline underline-offset-4 text-gray-800 p-4 "
+      >
+        {category.name}
+      </div>
 
       {isNavbarItem && category.children && isDropdownOpen && (
         <DropdownMenu>
           {category.children.map((child) => (
             <>
               <div key={child.category_id} className="px-4 py-5">
-                <div className="font-bold mb-2">{child.name}</div>
+                <div
+                  onClick={() => handleSubcategoryClick(child)}
+                  className="font-bold mb-2 cursor-pointer hover:underline underline-offset-4"
+                >
+                  {child.name}
+                </div>
                 <div className="">
                   {child.children.map((subChild) => (
                     <div
                       key={subChild.category_id}
-                      className="py-1 hover:underline"
+                      onClick={() => handleSubcategoryClick(subChild)}
+                      className="py-1 cursor-pointer hover:underline underline-offset-4"
                     >
                       {subChild.name}
                     </div>
@@ -66,9 +94,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/categories/all"
-        );
+        const response = await publicAPI.get("/categories/all");
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -120,7 +146,9 @@ const Navbar = () => {
                 <GoSearch size={20} />
                 <span className="text-sm small-size">SEARCH</span>
               </div>
-              <HeartWithBadge count={15} />
+              <Link to={"/pages/wishlist"}>
+                <HeartWithBadge />
+              </Link>
               <Link to={"/login"}>
                 <CiUser size={26} />
               </Link>
