@@ -1,4 +1,5 @@
 import Product from "../models/productModel.js";
+import { Op } from "sequelize";
 
 const productController = {
   // Create a new product
@@ -22,6 +23,28 @@ const productController = {
       res.status(200).send(products);
     } catch (error) {
       res.status(400).send(error);
+    }
+  },
+
+  getProductsByIds: async (req, res) => {
+    try {
+      const { ids } = req.body;
+      console.log("ids : ", ids);
+
+      if (!ids || ids.length === 0) {
+        return res.status(400).send({});
+      }
+
+      const products = await Product.findAll({
+        where: {
+          product_id: {
+            [Op.in]: ids,
+          },
+        },
+      });
+      res.json(products);
+    } catch (error) {
+      res.status(500).send("Server error");
     }
   },
 
@@ -73,6 +96,22 @@ const productController = {
       }
     } catch (error) {
       res.status(400).send(error);
+    }
+  },
+  getProductsByCategoryId: async (req, res) => {
+    try {
+      const categoryId = req.params.id;
+      const products = await Product.findAll({
+        where: {
+          category_id: categoryId,
+          is_active: true,
+        },
+      });
+      res.json(products);
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Error fetching products by category", error });
     }
   },
 
