@@ -46,11 +46,7 @@ function App() {
           ></Route>
 
           <Route path="/pages/faqs" element={<FAQS />}></Route>
-          <Route
-            path="/grid/:type/:name/:id
-          "
-            element={<CommonGrid />}
-          ></Route>
+          <Route path="/categories/:name/:id" element={<CommonGrid />}></Route>
           <Route path="/pages/careers" element={<Careers />}></Route>
           <Route path="/pages/contact" element={<Contact />}></Route>
           <Route path="/pages/size-chart" element={<SizeChart />}></Route>
