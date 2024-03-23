@@ -1,18 +1,31 @@
 import React, { useState } from "react";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import useFavoritesStore from "../store/favouritesStore";
 
 const SliderCard = ({ product }) => {
-  const [isFavorited, setIsFavorited] = useState(false);
+  const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
+  const [isFavorited, setIsFavorited] = useState(
+    isFavorite(product.product_id)
+  );
   const [isHovering, setIsHovering] = useState(false);
   const navigate = useNavigate();
   const imageUrl = product.image_urls[0];
-  const hoverImageUrl = product.image_urls[1];
+  const hoverImageUrl = product.image_urls[1] || imageUrl;
   const formattedName = product.product_name.replace(/ /g, "-").toLowerCase();
 
   const toggleFavorite = (event) => {
     event.preventDefault();
-    setIsFavorited(!isFavorited);
+    event.stopPropagation();
+
+    const currentFavorited = !isFavorited;
+    setIsFavorited(currentFavorited);
+
+    if (currentFavorited) {
+      addFavorite(product.product_id);
+    } else {
+      removeFavorite(product.product_id);
+    }
   };
 
   const handleCardClick = () => {
@@ -46,7 +59,7 @@ const SliderCard = ({ product }) => {
               </div>
               <button onClick={toggleFavorite}>
                 {isFavorited ? (
-                  <IoMdHeart size={25} />
+                  <IoMdHeart size={25} color="orange" />
                 ) : (
                   <IoMdHeartEmpty size={25} />
                 )}
