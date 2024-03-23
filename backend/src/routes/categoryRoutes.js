@@ -13,6 +13,8 @@ router.get("/all", categoryController.getCategoryHierarchy);
 // Get products of a category
 // router.get("/products/:categoryId", categoryController.getProductsByCategoryId);
 
+router.get("/home", categoryController.getSecondTierCategories);
+
 // Get a single category by id
 router.get("/:id", categoryController.getCategoryById);
 
