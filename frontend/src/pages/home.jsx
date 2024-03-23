@@ -7,7 +7,7 @@ import canvasImage2 from "../assets/img/canvasImage2.jpg";
 import Gallery from "../components/gallery";
 import Slider from "../components/imageSlider";
 import ShapeCarousel from "../components/shapeCarousel";
-import axios from "axios";
+import { publicAPI } from "../utils/apiCalling";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -15,7 +15,7 @@ const Home = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/products");
+      const response = await publicAPI.get("/products");
       const activeProducts = response.data.filter(
         (product) => product.is_active
       );
@@ -27,8 +27,8 @@ const Home = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/categories");
-      setCategories(response.data.slice(0, 4));
+      const response = await publicAPI.get("/categories/home");
+      setCategories(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -57,7 +57,7 @@ const Home = () => {
         </div>
       </section>
       <CanvasImage imageUrl={canvasImage2} path={"/shop"} />
-      {/* <Gallery items={categories} /> */}
+      <Gallery items={categories} />
       <ShapeCarousel />
     </div>
   );

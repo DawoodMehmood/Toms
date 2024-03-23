@@ -3,16 +3,22 @@ import CustomAccordion from "../components/customAccordion";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import Linkify from "react-linkify";
+import { publicAPI } from "../utils/apiCalling";
 
 const FAQS = () => {
   const [faqs, setFaqs] = useState([]);
 
+  const fetchFaqs = async () => {
+    try {
+      const response = await publicAPI.get("/faqs");
+      setFaqs(response.data);
+    } catch (error) {
+      console.error("Error fetching faqs:", error);
+    }
+  };
+
   useEffect(() => {
-    // Fetch FAQ data from your API
-    fetch("http://localhost:5000/api/faqs")
-      .then((response) => response.json())
-      .then((data) => setFaqs(data))
-      .catch((error) => console.error("Error fetching faqs:", error));
+    fetchFaqs();
   }, []);
 
   return (

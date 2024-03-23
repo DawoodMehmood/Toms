@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import SliderCard from "../components/sliderCard";
 import { useParams } from "react-router-dom";
+import { publicAPI } from "../utils/apiCalling";
 
 function CommonGrid() {
-  const { type, name, id } = useParams();
+  const { name, id } = useParams();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProductsByType = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/${type}/products/${id}`
-        );
+        const response = await publicAPI.get(`/products/category/${id}`);
         const activeProducts = response.data.filter(
           (product) => product.is_active
         );
@@ -23,12 +21,12 @@ function CommonGrid() {
     };
 
     fetchProductsByType();
-  }, [type, id]);
+  }, [id]);
 
   return (
-    <div className=" m-10 space-y-5">
+    <div className="m-10 space-y-5">
       <div className="text-left">
-        <h1 className="text-xl">{name}</h1>
+        <h1 className="text-2xl serif tracking-widest">{name.toUpperCase()}</h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
