@@ -239,3 +239,7 @@ input[type="number"] {
   color: gray;
   border-color: gray;
 }
+
+.star-svg {
+  display: inline
+}
