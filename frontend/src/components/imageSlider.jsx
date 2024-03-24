@@ -36,7 +36,7 @@ const Slider = ({ title, productsData }) => {
     },
   };
 
-  const showNavigationButtons = productsData.length > 4;
+  const showNavigationButtons = productsData?.length > 4;
 
   return (
     <section>
