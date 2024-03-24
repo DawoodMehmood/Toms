@@ -1,57 +1,67 @@
-import React, { useEffect, useState } from "react";
-import image1 from "./../assets/img/pro-1.jpg";
+import React, { useEffect, useState, useMemo } from "react";
 import StarRating from "../components/starRating";
 import AfterpayLogo from "../components/afterPayLogo";
 import CustomAccordion from "../components/customAccordion";
 import Slider from "../components/imageSlider";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import parse from "html-react-parser";
 import useFavoritesStore from "../store/favouritesStore";
 import { publicAPI } from "../utils/apiCalling";
+import { formatDistanceToNow } from "date-fns";
+import { Rating } from "react-simple-star-rating";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const location = useLocation();
-  const [product, setProduct] = useState(location.state?.productData);
+  const [product, setProduct] = useState();
+  const [productReviews, setProductReviews] = useState([]);
   const [variants, setVariants] = useState();
   const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
-  const [isFavorited, setIsFavorited] = useState(
-    isFavorite(product.product_id)
-  );
   const [isLoading, setIsLoading] = useState(true);
+  const [isFavorited, setIsFavorited] = useState();
 
   const toggleFavorite = () => {
     const currentFavorited = !isFavorited;
     setIsFavorited(currentFavorited);
 
     if (currentFavorited) {
-      addFavorite(product.product_id);
+      addFavorite(product?.product_id);
     } else {
-      removeFavorite(product.product_id);
+      removeFavorite(product?.product_id);
     }
   };
 
   useEffect(() => {
     const fetchProductById = async () => {
+      setIsLoading(true);
       try {
-        const response = await publicAPI.get(`/products/variants/${id}`);
+        const response = await publicAPI.get(`/products/${id}`);
         if (response.data) {
-          setProduct(response.data.product);
-          setVariants(response.data.variants);
-        }
-        if (response.status === 404) {
+          setProduct(response.data);
+          setIsFavorited(isFavorite(response.data.product_id));
+          // setVariants(response.data.variants);
           setIsLoading(false);
+          fetchProductReviews(response.data.product_id);
         }
       } catch (error) {
-        console.error("Failed to fetch products", error);
+        console.error("Failed to fetch product", error);
+        setIsLoading(false);
       }
     };
-    if (!product) {
-      fetchProductById();
-    } else {
-      setIsLoading(false);
-    }
+    const fetchProductReviews = async (productId) => {
+      try {
+        const response = await publicAPI.get(
+          `/productReviews/product/${productId}/reviews`
+        );
+        if (response.data) {
+          setProductReviews(response.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch product reviews", error);
+      }
+    };
+    fetchProductById();
+
     const setEqualHeight = () => {
       const div1 = document.querySelector(".div1");
       const div2 = document.querySelector(".div2");
@@ -76,25 +86,27 @@ const ProductDetails = () => {
     return () => {
       window.removeEventListener("resize", setEqualHeight);
     };
-  }, [id, product]);
-
-  const ratings = [4, 5, 3, 4, 5];
-  if (!ratings || !Array.isArray(ratings) || ratings.length === 0) {
-    return null; // Return null if ratings array is undefined, not an array, or empty
-  }
+  }, []);
 
   // Calculate average rating
-  const totalRatings = ratings.length;
-  const averageRating = ratings.reduce((a, b) => a + b, 0) / totalRatings;
-  console.log(averageRating);
-  if (!product) {
+  const totalRatings = productReviews?.length;
+  // const averageRating = productReviews.reduce((acc, review) => acc + review.rating, 0) / totalRatings;
+  const averageRating = useMemo(() => {
+    const totalRating = productReviews.reduce(
+      (acc, review) => acc + review.rating,
+      0
+    );
+    return totalRatings > 0 ? totalRating / totalRatings : 0;
+  }, [productReviews]);
+
+  if (isLoading) {
     return <div>Product not found</div>;
   }
   return (
     <section className="mx-5 my-10">
       <div className="mx-auto grid grid-cols-1 sm:grid-cols-12">
         <div className="div1 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:col-span-6 md:col-span-7 ">
-          {product.image_urls.map((url, index) => (
+          {product?.image_urls.map((url, index) => (
             <div key={index}>
               <img src={url} alt={`Product ${index + 1}`} className="w-full" />
             </div>
@@ -103,7 +115,7 @@ const ProductDetails = () => {
 
         <div className="div2 sm:col-span-6 md:col-span-5 my-4 mx-3 ">
           <div className="flex items-center justify-between">
-            <h4>{product.product_name.toUpperCase()}</h4>
+            <h4>{product?.product_name.toUpperCase()}</h4>
             <button onClick={toggleFavorite}>
               {isFavorited ? (
                 <IoMdHeart size={25} color="orange" />
@@ -114,12 +126,21 @@ const ProductDetails = () => {
           </div>
 
           <div className="flex justify-start items-center">
-            <StarRating averageRating={averageRating} />
-            <span className="ml-2 text-gray-600">{totalRatings} reviews</span>
+            <Rating
+              iconsCount={5}
+              initialValue={averageRating}
+              readonly
+              allowFraction
+              size={22}
+            />
+            <span className="ml-2 text-gray-600">
+              {totalRatings} review
+              {productReviews.length > 1 ? "s" : ""}
+            </span>
           </div>
 
           <p className="small-size my-2">
-            <strong>{product.price} AED</strong>
+            <strong>{product?.price} AED</strong>
           </p>
           <br />
           <p className="afterpay-paragraph ">
@@ -136,7 +157,7 @@ const ProductDetails = () => {
             </Link>
           </p>
           <br />
-          <p>{parse(product.description)}</p>
+          <p>{parse(product ? product.description : "")}</p>
           <br />
           <div>
             <h6>COLOR</h6>
@@ -238,11 +259,11 @@ const ProductDetails = () => {
           </div>
           <CustomAccordion
             heading={<p>PRODUCT DETAILS</p>}
-            content={product.product_details}
+            content={product?.product_details}
           />
           <CustomAccordion
             heading={<p>SIZE & FIT</p>}
-            content={product.size_and_fit}
+            content={product?.size_and_fit}
           />
 
           <CustomAccordion
@@ -291,43 +312,69 @@ const ProductDetails = () => {
 
       <section>
         <div className="flex flex-col justify-center items-center">
-          <p className="number-heading">{averageRating}</p>
-          <StarRating averageRating={averageRating} />
-          <p>BASED ON {totalRatings} REVIEWS</p>
+          <p className="number-heading">{averageRating.toFixed(1)}</p>
+          <Rating
+            iconsCount={5}
+            initialValue={averageRating}
+            readonly
+            allowFraction
+            size={24}
+          />
+          <p>
+            BASED ON {productReviews.length} REVIEW
+            {productReviews.length > 1 ? "S" : ""}
+          </p>
         </div>
-        <div className="border-t border-gray-200 mt-3 py-5 mx-16">
-          <div className="flex justify-between">
-            <div className="flex justify-start gap-4">
-              <p className="font-semibold">EMMA C.</p>
-              <p className="text-gray-400">VERIFIED BUYER</p>
-            </div>
-            <div>
-              <p>2 WEEKS AGO</p>
-            </div>
-          </div>
-          <div className="flex flex-row gap-3 my-4">
-            <div>
-              <img className="w-14 h-16" src={image1} alt="" />
-            </div>
-            <div className="flex flex-col">
-              <div>
-                <p>
-                  <strong>REVIEWING</strong>
-                </p>
+        {productReviews &&
+          productReviews.map((review, index) => (
+            <article>
+              <div className="border-t border-gray-200 mt-3 py-5 mx-16">
+                <div className="flex justify-between">
+                  <div className="flex justify-start gap-4">
+                    <p className="font-thin serif tracking-wider">
+                      {review.Customer.customer_name.toUpperCase()}
+                    </p>
+                    {/* <p className="text-gray-400">VERIFIED BUYER</p> */}
+                  </div>
+                  <div>
+                    <p>
+                      {formatDistanceToNow(new Date(review.review_date), {
+                        addSuffix: true,
+                      })}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-row gap-3 my-4">
+                  <div>
+                    <img
+                      className="w-14 h-14 object-cover"
+                      src={product?.image_urls[0]}
+                      alt=""
+                    />
+                  </div>
+                  <div className="flex flex-col serif">
+                    <div>
+                      <p>
+                        <strong>REVIEWING</strong>
+                      </p>
+                    </div>
+                    <div>
+                      <p>{product?.product_name.toUpperCase()}</p>
+                    </div>
+                  </div>
+                </div>
+                <Rating
+                  iconsCount={5}
+                  initialValue={review.rating}
+                  readonly
+                  size={24}
+                />
+                <div className="my-2">
+                  <p className="text-gray-600">{review.review_text}</p>
+                </div>
               </div>
-              <div>
-                <p>AFTERSUN MINI DRESS TROPICANA</p>
-              </div>
-            </div>
-          </div>
-          <StarRating averageRating={averageRating} />
-          <div className="my-2">
-            <h4>VERY HAPPY</h4>
-          </div>
-          <div>
-            <p className="text-gray-600">Great Price, Great Quality.</p>
-          </div>
-        </div>
+            </article>
+          ))}
       </section>
     </section>
   );
