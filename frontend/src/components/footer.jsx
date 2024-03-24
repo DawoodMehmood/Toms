@@ -3,8 +3,11 @@ import googlePlayStore from "../assets/img/playstore.jpg";
 import applePlayStore from "../assets/img/apple.jpg";
 import logo from "../assets/img/logo.png";
 import { Link } from "react-router-dom";
+import useAuthStore from "../store/authStore";
 
 const Footer = () => {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn());
+
   return (
     <footer className="footer bg-banner py-5 ">
       <div className="sm:mx-28">
@@ -70,20 +73,26 @@ const Footer = () => {
               <div className="flex flex-col gap-3 my-10">
                 <p className="font-bold fu-hdg">MY ACCOUNT</p>
                 <div className="flex flex-col gap-1 text-gray-700">
-                  <Link to="/login" className=" text-decoration-none">
-                    LOGIN
-                  </Link>
+                  {!isLoggedIn && (
+                    <Link to="/login" className=" text-decoration-none">
+                      LOGIN
+                    </Link>
+                  )}
 
-                  <Link
-                    href="/pages/register"
-                    className=" text-decoration-none"
-                  >
-                    CREATE ACCOUNT
-                  </Link>
+                  {!isLoggedIn && (
+                    <Link
+                      href="/pages/register"
+                      className=" text-decoration-none"
+                    >
+                      CREATE ACCOUNT
+                    </Link>
+                  )}
 
-                  <Link to="/pages/account" className=" text-decoration-none">
-                    MY ACCOUNT
-                  </Link>
+                  {isLoggedIn && (
+                    <Link to="/my-account" className=" text-decoration-none">
+                      MY ACCOUNT
+                    </Link>
+                  )}
                 </div>
                 <div id="findUs" className="mt-5 ">
                   <span className="fu-hdg ">FIND US</span>
