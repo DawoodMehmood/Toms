@@ -52,7 +52,7 @@ const Footer = () => {
               <div className="flex flex-col gap-3 my-10">
                 <p className="font-bold fu-hdg">DISCOVER</p>
                 <div className="flex flex-col gap-1 text-gray-700">
-                  <Link href="/pages/about" className=" text-decoration-none">
+                  <Link to="/pages/about" className=" text-decoration-none">
                     ABOUT US
                   </Link>
                   <Link
