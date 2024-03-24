@@ -491,7 +491,7 @@ CREATE TABLE
     `customer_id` int DEFAULT NULL,
     `rating` int DEFAULT NULL,
     `review_text` text,
-    `is_active` tinyint (1) NOT NULL DEFAULT '0',
+    `is_active` tinyint (1) NOT NULL DEFAULT '1',
     `review_date` datetime DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`review_id`),
     KEY `fk_reviews_products` (`product_id`),
