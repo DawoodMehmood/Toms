@@ -7,6 +7,7 @@ import Size from "./sizeModel.js";
 import Order from "./orderModel.js";
 import Customer from "./customerModel.js";
 import OrderStatus from "./orderStatusModel.js";
+import ProductReview from "./productReviewsModel.js";
 
 export const setupAssociations = () => {
   Category.hasMany(Product, {
@@ -60,4 +61,10 @@ export const setupAssociations = () => {
 
   Order.belongsTo(OrderStatus, { foreignKey: "order_status_id" });
   OrderStatus.hasMany(Order, { foreignKey: "order_status_id" });
+
+  Product.hasMany(ProductReview, { foreignKey: "product_id" });
+  ProductReview.belongsTo(Product, { foreignKey: "product_id" });
+
+  Customer.hasMany(ProductReview, { foreignKey: "customer_id" });
+  ProductReview.belongsTo(Customer, { foreignKey: "customer_id" });
 };
