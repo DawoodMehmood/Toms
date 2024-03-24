@@ -34,6 +34,7 @@ function App() {
         <Route element={<UserLayout />}>
           <Route element={<ProtectedRoute />}>
             <Route path="/register" element={<Register />} />
+            <Route path="/my-account" element={<MyAccount />}></Route>
           </Route>
 
           <Route
@@ -53,7 +54,6 @@ function App() {
           <Route path="/pages/returns" element={<Returns />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/addresses" element={<Addresses />}></Route>
-          <Route path="/my-account" element={<MyAccount />}></Route>
           <Route path="/reset-password" element={<ResetPassword />}></Route>
           <Route path="/forget-password" element={<ForgetPassword />}></Route>
           <Route path="pages/checkout" element={<Checkout />}></Route>
