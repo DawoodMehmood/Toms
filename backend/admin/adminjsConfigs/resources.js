@@ -82,7 +82,7 @@ const resources = [
       },
       actions: {
         new: {
-          isAccessible: false,
+          // isAccessible: false,
         },
       },
     },
