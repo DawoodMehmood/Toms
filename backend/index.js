@@ -32,6 +32,7 @@ import colorRoutes from "./src/routes/colorRoutes.js";
 import faqsRoutes from "./src/routes/faqsRoutes.js";
 import measurementRoutes from "./src/routes/measurementRoutes.js";
 import authRoutes from "./src/routes/authRoutes.js";
+import productReviewsRoutes from "./src/routes/productReviewsRoutes.js";
 
 import { componentLoader } from "./admin/components/components.js";
 import ProductReview from "./src/models/productReviewsModel.js";
@@ -138,6 +139,7 @@ app.use("/api/colors", colorRoutes);
 app.use("/api/faqs", faqsRoutes);
 app.use("/api/measurements", measurementRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/productReviews", productReviewsRoutes);
 // app.post("/api/token/validate", middleware, (req, res) => {
 //   // If the middleware passes, the token is valid
 //   res.status(200).json({ valid: true });
