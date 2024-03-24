@@ -18,7 +18,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(credentials);
-      navigate("/account");
+      navigate("/my-account");
     } catch (error) {
       // Handle login error (e.g., show an error message)
       console.error("Login error:", error);
