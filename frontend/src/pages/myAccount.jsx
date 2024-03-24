@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
+import useAuthStore from "../store/authStore";
 
 const MyAccount = () => {
+  const logout = useAuthStore((state) => state.logout);
+
   return (
     <div className="md:mx-36 my-20">
       <div className="grid md:grid-cols-2 gap-4">
@@ -10,7 +13,8 @@ const MyAccount = () => {
           <h1 className="bigText">MY ACCOUNT</h1>
           <div>
             <Link
-              to="/logout"
+              to="/home"
+              onClick={logout}
               className="text-gray-400 flex items-center gap-2 small-size hover:underline"
             >
               <CiLogout />
