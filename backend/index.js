@@ -1,13 +1,18 @@
 import express from "express";
+import session from "express-session";
 import colors from "colors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
+import bcrypt from "bcrypt";
 import { setupAssociations } from "./src/models/association‏Model.js";
 import { sequelize } from "./src/config/dbConfig.js";
+
 import AdminJS from "adminjs";
 import AdminJSExpress from "@adminjs/express";
 import AdminJSSequelize from "@adminjs/sequelize";
+import { dark, light } from "@adminjs/themes";
+import { DefaultAuthProvider } from "adminjs";
 
 import Product from "./src/models/productModel.js";
 import Category from "./src/models/categoryModel.js";
@@ -16,6 +21,10 @@ import Faqs from "./src/models/faqsModel.js";
 import Brand from "./src/models/brandModel.js";
 import Order from "./src/models/orderModel.js";
 import Customer from "./src/models/customerModel.js";
+import User from "./src/models/userModel.js";
+// import ProductAdminConfig from "./admin/adminjsConfigs/product.js";
+import CategoryAdminConfig from "./admin/adminjsConfigs/category.js";
+import Measurement from "./src/models/measurementModel.js";
 
 import productRoutes from "./src/routes/productRoutes.js";
 import categoryRoutes from "./src/routes/categoryRoutes.js";
@@ -24,11 +33,10 @@ import faqsRoutes from "./src/routes/faqsRoutes.js";
 import measurementRoutes from "./src/routes/measurementRoutes.js";
 import authRoutes from "./src/routes/authRoutes.js";
 
-// import ProductAdminConfig from "./admin/adminjsConfigs/product.js";
-import CategoryAdminConfig from "./admin/adminjsConfigs/category.js";
-import Measurement from "./src/models/measurementModel.js";
-
 import { componentLoader } from "./admin/components/components.js";
+import ProductReview from "./src/models/productReviewsModel.js";
+import OrderStatus from "./src/models/orderStatusModel.js";
+import resources from "./admin/adminjsConfigs/resources.js";
 
 dotenv.config();
 
@@ -37,62 +45,43 @@ const PORT = process.env.PORT || 8000;
 //register sequelize adapter for adminjs
 AdminJS.registerAdapter(AdminJSSequelize);
 
-const brandOptions = {
-  properties: {
-    is_active: {
-      type: "boolean",
-      isVisible: { list: false, filter: true, show: true, edit: true },
-      // Attempt to set the default value (may not automatically check the box, see Step 2 for handling in the frontend)
-      defaultValue: true,
-    },
-    // Define other property options as needed
-  },
-  // Include other resource options as necessary
-};
-
 // Set up AdminJS
 const adminJs = new AdminJS({
-  databases: [sequelize], // Use your sequelize instance
+  availableThemes: [dark, light],
+  defaultTheme: "light",
+  databases: [sequelize],
   rootPath: "/admin",
-  resources: [
-    { resource: Brand, options: brandOptions },
-    // ProductAdminConfig,
-    {
-      resource: Product,
-      options: {
-        parent: {
-          name: "Inventory",
-          icon: "List",
-        },
-      },
-    },
-    CategoryAdminConfig,
-    {
-      resource: Order,
-      options: {
-        parent: "Inventory",
-      },
-    },
-    {
-      resource: Customer,
-      options: {
-        parent: {
-          name: "User Management",
-          icon: "User",
-        },
-      },
-    },
-    Color,
-    Faqs,
-    Measurement,
-  ],
+  locale: {
+    language: "en",
+  },
+  resources: resources,
   branding: {
     companyName: "Femina Dubai",
+    withMadeWithLove: false,
+    favicon:
+      "https://t4.ftcdn.net/jpg/03/30/46/65/360_F_330466544_hAf9RG0j4nHPUC3R3ee9Ei9znHluYLJ5.jpg",
+    logo: false,
+    // logo: "https://t4.ftcdn.net/jpg/03/30/46/65/360_F_330466544_hAf9RG0j4nHPUC3R3ee9Ei9znHluYLJ5.jpg",
   },
   componentLoader,
 });
-adminJs.watch();
-// Build and use the AdminJS router
+
+const authenticate = async ({ email, password }) => {
+  const user = await User.findOne({ where: { email } });
+  if (user) {
+    const matched = await bcrypt.compare(password, user.password);
+    if (matched) {
+      // Return the user object that will be available in AdminJS as currentAdmin
+      return { email: user.email, id: user.user_id, name: user.name };
+    }
+  }
+  return false;
+};
+
+const authProvider = new DefaultAuthProvider({
+  authenticate,
+});
+
 // const adminRouter = AdminJSExpress.buildAuthenticatedRouter(adminJs, {
 //   authenticate: async (email, password) => {
 //     // Implement your authentication mechanism here
@@ -101,11 +90,24 @@ adminJs.watch();
 //   },
 //   cookiePassword: "some-secret-password-used-to-secure-cookie",
 // });
+
+const authRouter = AdminJSExpress.buildAuthenticatedRouter(
+  adminJs,
+  {
+    provider: authProvider,
+    cookieName: "adminjs",
+    cookiePassword: "a-secure-and-random-cookie-password",
+    // Additional express-session options here if needed
+  },
+  express()
+);
+
 const adminRouter = AdminJSExpress.buildRouter(adminJs);
 
 const app = express();
 app.use(express.json());
 
+adminJs.watch();
 app.use(adminJs.options.rootPath, adminRouter);
 
 const allowedOrigins = ["https://<>.com", "http://localhost:3000"];
