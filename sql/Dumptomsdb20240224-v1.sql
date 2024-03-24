@@ -26,6 +26,28 @@
 --
 -- Table structure for table `brand`
 --
+DROP TABLE IF EXISTS `users`;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+
+/*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE
+  `users` (
+    `user_id` int NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `email` varchar(255) NOT NULL unique,
+    `password` varchar(255) NOT NULL,
+    `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`user_id`)
+  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `brand`
+--
 DROP TABLE IF EXISTS `brand`;
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
