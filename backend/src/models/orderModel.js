@@ -13,7 +13,7 @@ Order.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "Customer",
+        model: "customers",
         key: "customer_id",
       },
       onDelete: "CASCADE",
@@ -30,7 +30,7 @@ Order.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "OrderStatus",
+        model: "order_statuses",
         key: "order_status_id",
       },
       onDelete: "CASCADE",
